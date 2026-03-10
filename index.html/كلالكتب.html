@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القسم الإسلامي - مكتبة الأندلس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #c17d3e;
+            --accent-hover: #d98c44;
+            --gold: #d4af37;
+            --islamic-green: #2a5934;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            overflow-x: hidden;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* تنسيق عام للقسم */
+        .islamic-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            color: var(--text-primary);
+            text-align: center;
+            position: relative;
+        }
+
+        .islamic-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="islamicPattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(193,125,62,0.1)"/><path d="M5 5 L15 15 M15 5 L5 15" stroke="rgba(193,125,62,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23islamicPattern)"/></svg>');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to left, var(--accent), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* تنسيق القائمة المنسدلة */
+        .books-menu {
+            position: relative;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        .menu-button {
+            background: linear-gradient(135deg, var(--islamic-green) 0%, #3a6b47 100%);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(135deg, #3a6b47 0%, #4a7b57 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(42, 89, 52, 0.6);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--card-bg);
+            min-width: 280px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            z-index: 100;
+            right: 0;
+            margin-top: 15px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text-primary);
+            padding: 15px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(193, 125, 62, 0.1);
+            color: var(--accent);
+            padding-right: 25px;
+        }
+
+        .dropdown-content a i {
+            margin-left: 12px;
+            color: var(--accent);
+        }
+
+        .books-menu:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* تنسيق كتب العرض */
+        .featured-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            padding: 0 20px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--gold));
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: var(--accent);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .book-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .book-card .author {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 1.2rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .read-btn {
+            background: var(--islamic-green);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .read-btn:hover {
+            background: #3a6b47;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .featured-books {
+                grid-template-columns: 1fr;
+            }
+            
+            .dropdown-content {
+                right: auto;
+                left: 0;
+                min-width: 250px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .menu-button {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .book-card {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+<section class="islamic-section">
+    <div class="container">
+        <h2 class="section-title"> كل الكتب </h2>
+        <p class="section-subtitle">
+      مكتبة شاملة فيها كل شيء تحبه: كتب إسلامية، أدبية، فلسفية، تاريخية، علمية، 
+       خيال علمي، قصص بوليسية، وحتى كنوز من تراثنا العربي. اقرأ واكتشف عالم كامل بين يديك!
+         </p>
+        
+        <!-- القائمة المنسدلة -->
+        <div class="books-menu">
+            <button class="menu-button">
+                <i class="fas fa-book-open"></i>
+                الوصول السريع للكتب
+            </button>
+            <div class="dropdown-content">
+                <a href="books/islamic books/الجزاء من جنس العمل/قاعدة_الجزاء_من_جنس_العمل_وتطبيقاتها_في_القرآن_الكريم_خالد_السبت.pdf" download target="_blank"><i class="fas fa-download"></i> الجزاء من جنس العمل</a>
+                <a href="books/islamic books/تحقيق نصوص علوم القران الكريم/تحقيق_نصوص_علوم_القرآن_الكريم،_قضايا_منهجية_وموضوعية_غانم_قدوري.pdf" download target="_blank"><i class="fas fa-download"></i> تحقيق نصوص علوم القرآن الكريم</a>
+                <a href="books/islamic books/رياض الصالحين/رياض_الصالحين_من_كلام_سيد_المرسلين،_ت_الفحل.pdf" download target="_blank"><i class="fas fa-download"></i> رياض الصالحين</a>
+                <a href="books/islamic books/المنتخب/المنتخب_من_أحاديث_الآداب_والأخلاق_طبعة_مجمع_الملك_فهد.pdf" download target="_blank"><i class="fas fa-download"></i> المنتخب</a>
+                <a href="books/islamic books/بلوغ المرام/بلوغ المرام - ت. يوسف بديوي.pdf" download target="_blank"><i class="fas fa-download"></i> بلوغ المرام</a>
+                <a href="books/islamic books/الاعتبار من سير الأبرار/الاعتبار من سير الأبرار.pdf" download target="_blank"><i class="fas fa-download"></i> الاعتبار من سير الأبرار</a>
+                <a href="books/islamic books/سيره الحبيب/كتاب سيرة رسول الله - ابن طرخان.pdf" download target="_blank"><i class="fas fa-download"></i> كتاب سيرة رسول الله</a>
+                <a href="books/islamic books/كتاب عالمُ الأنبياء/كتاب عالمُ الأنبياء.pdf" download target="_blank"><i class="fas fa-download"></i> كتاب عالم الأنبياء</a>
+                <a href="books/islamic books/نضرات في التفسير الماثور/نظرات_في_التفسير_بالمأثور_خالد_السبت.pdf" download target="_blank"><i class="fas fa-download"></i> نضرات في التفسير المأثور</a>
+                <a href="books/islamic books/المختصر/المختصر_في_الفتوى_بمذهب_مالك_بن_انس_المعروف_بمختصر_خليل.pdf" download target="_blank"><i class="fas fa-download"></i> المختصر</a>
+                <a href="books/islamic books/مختصر منهاج اهل السنه/مختصر_منهاج_السنة_لابن_تيمية_عبدالله_الغنيمان.pdf" download target="_blank"><i class="fas fa-download"></i> مختصر منهاج أهل السنة</a>
+                <a href="books/islamic books/شرح مقدمة تفسير ابن عطية/شرح_مقدمة_تفسير_ابن_عطية_مساعد_الطيار.pdf" download target="_blank"><i class="fas fa-download"></i> شرح مقدمة تفسير ابن عطية</a>
+                <a href="books/islamic books/مختصر الروضة (البلبل في أصول الفقه)/مختصر_الروضة_البلبل_في_أصول_الفقه_.pdf" download target="_blank"><i class="fas fa-download"></i> مختصر الروضة (البلبل في أصول الفقه)</a>
+                <a href="books/islamic books/المسكت/المسكت_و_الأقسام_والخصال_و_شرائط_الأحكام.pdf" download target="_blank"><i class="fas fa-download"></i> المسكت</a>
+                <a href="books/islamic books/السحر/السحر_،_أنواعه_وأحكامه_وتطبيقاته_المعاصرة_هيفاء_الرشيد.pdf" download target="_blank"><i class="fas fa-download"></i> السحر</a>
+                <a href="books/islamic books/الجهل بمسائل الاعتقاد والحكمه/الجهل_بمسائل_الاعتقاد_وحكمه_عبدالرزاق_معاش (1).pdf" download target="_blank"><i class="fas fa-download"></i> الجهل بمسائل الاعتقاد وحكمه</a>
+                <a href="books/الكتب الادبيه/مواجهه الصحرا/مواجهة_الصحراء_مغامرات_عبر_شمال_أفريقيا_كنود_هولمبو.pdf" download target="_blank"><i class="fas fa-download"></i> مواجهة_الصحراء</a>
+                <a href="books/الكتب الادبيه/ما اردنا قوله من البدايه/ما_أردت_قوله_من_البداية_علي_صلاح_بلداوي.pdf" download target="_blank"><i class="fas fa-download"></i> ما اردنا قوله من البداية</a>
+                <a href="books/الكتب الادبيه/رساله الئ الجنرال فرانكو/رسالة إلى الجنرال فرانكو.pdf" download target="_blank"><i class="fas fa-download"></i> رساله الئ الجنرال فرانكو</a>
+                <a href="books/الكتب الادبيه/ردع الاعداء داخل البلاد وخارجها/ردع الأعداء داخل البلاد وخارجها.pdf" download target="_blank"><i class="fas fa-download"></i> ردع الاعداء داخل البلاد وخارجها</a>
+                <a href="books/الكتب الادبيه/حقائق وثوابت في القظية الفلطينية/حقائق_وثوابت_في_القضية_الفلسطينية_رؤية_إسلامية.pdf" download target="_blank"><i class="fas fa-download"></i>  حقائق وثوابت في القظية الفلطينية</a>
+                <a href="books/الكتب الادبيه/جمهرة البلاغة/جمهرة_البلاغة_للعلامة_عبدالحميد_الفراهي.pdf" download target="_blank"><i class="fas fa-download"></i> جمهرة البلاغة</a>
+                <a href="books/الكتب الادبيه/امواج/أمواج_سيرة_عراقية_عبد_الله_إبراهيم.pdf" download target="_blank"><i class="fas fa-download"></i> امواج</a>
+                <a href="books/الكتب الادبيه/الخنجر المرهون/الخنجر_المرهون_سلطان_بن_محمد_القاسمي.pdf" download target="_blank"><i class="fas fa-download"></i> الخنجر المرهون</a>
+                <a href="books/الكتب الادبيه/العربية الاولئ/نجيب_محفوظ_كاتب_العربية_الأول_فؤاد_قنديل.pdf" download target="_blank"><i class="fas fa-download"></i>العربية الاولئ</a>
+                <a href="books/الكتب الادبيه/شرفة العار/شرفة العار ل إبراهيم نصر الله .pdf" download target="_blank"><i class="fas fa-download"></i> شرفة العار</a>
+                <a href="books/الكتب الادبيه/رحلات فارتيما/رحلات فارتيما الحاج يونس المصري.pdf" download target="_blank"><i class="fas fa-download"></i> رحلات فارتيما</a>
+                <a href="books/الكتب الادبيه/التراث التربوي الاسلامي/التراث_التربوي_الإسلامي_حالة_البحث_فيه،_ولمحات_من_تطوره،_وقطوف_من.pdf" download target="_blank"><i class="fas fa-download"></i> التراث التربوي الاسلامي</a>
+                <a href="books/الكتب الادبيه/منظومة القيم المقاصدية/القيم_المقاصدية_وتجلياتها_التربوية.pdf" download target="_blank"><i class="fas fa-download"></i> منظومة القيم المقاصدية</a>
+                <a href="books/الكتب الادبيه/القيم الجامعية/القيم_الجامعية_فلسفتها_ومرجعيتها_وتجلياتها.pdf" download target="_blank"><i class="fas fa-download"></i> القيم الجامعية</a>
+                <a href="books/الكتب الادبيه/التربيه الفكرية/التربية_الفكرية_في_سياق_النهوض_الحضاري_المنشود.pdf" download target="_blank"><i class="fas fa-download"></i> التربيه الفكرية</a>
+                <a href="books/الكتب الادبيه/سنا البرق التهامي/سنا_البرق_التهامي_في_أبناء_الشريف_أبي_شيبة_الحازمي.pdf" download target="_blank"><i class="fas fa-download"></i> سنا البرق التهامي</a>
+                <a href="books/الكتب الفكرية والفلسفية/التحليل القصصي في البحث العلمي/التحليل_القصصي_في_البحث_العلمي_توظيف_السرد_كأداة_للكشف_والتفسير.pdf" download target="_blank"><i class="fas fa-download"></i> التحليل القصصي في البحث العلمي </a>
+                <a href="books/الكتب الفكرية والفلسفية/ديوان ابن سهل الاندلسي/ديوان ابن سهل ط صادر.pdf" download target="_blank"><i class="fas fa-download"></i> ديوان ابن سهل الاندلسي </a>
+                <a href="books/الكتب الفكرية والفلسفية/تمهيد لتاريخ المدرسه الاسكندرية/تمهيد_لتاريخ_مدرسة_الإسكندرية_وفلسفتها♦.pdf" download target="_blank"><i class="fas fa-download"></i> تمهيد لتاريخ المدرسه الاسكندرية</a>
+                <a href="books/الكتب الفكرية والفلسفية/مراسلات ال الحفظي/مراسلات آل الحفظي.pdf" download target="_blank"><i class="fas fa-download"></i>  مراسلات ال الحفظي</a>
+                <a href="books/الكتب الفكرية والفلسفية/مذكرات رستم حيدر/مذكرات رستم حيدر.pdf" download target="_blank"><i class="fas fa-download"></i>  مذكرات رستم حيدر</a>
+                <a href="books/الكتب الفكرية والفلسفية/نفح العود/نفح العود - تحقيق الصميلي.pdf" target="_blank"><i class="fas fa-download"></i>  نفح العود</a>
+                <a href="books/الكتب الفكرية والفلسفية/المثقفون المغالطون/المثقفون_المغالطون_,_الأنتصار_الأعلامي_لخبراء_الكذب_بسكال_بونيفاس.pdf" download target="_blank"><i class="fas fa-download"></i> المثقفون المغالطون</a>
+                <a href="books/الكتب الفكرية والفلسفية/البديع في اخبار الاشراف البديعيين/البديع_في_أخبار_الأشراف_النعميين_،_آل_عيشان_،_أحفاد_الشفيع.pdf"target="_blank"><i class="fas fa-download"></i> البديع في اخبار الاشراف البديعيين </a>
+                <a href="books/الكتب الفكرية والفلسفية/التفيكر بالنظرية ام التفكير بالنموذج/التفكير_بالنظرية_أم_التفكير_بالنموذج؟_مساءلة_تموضع_النظرية_في_التحليل.pdf"target="_blank"><i class="fas fa-download"></i> التفيكر بالنظرية ام التفكير بالنموذج</a>
+                <a href="books/الكتب الفكرية والفلسفية/خواطر/خواطر - بسكال.pdf" download target="_blank"><i class="fas fa-download"></i>  خواطر</a>
+                <a href="books/الكتب الفكرية والفلسفية/مصر في العصر البيزنطي/رأفت_عبد_الحميد_طار_منصور،_مصر_في_العصر_البيزنطي_284_641م♦.pdf" download target="_blank"><i class="fas fa-download"></i>  مصر في العصر البيزنطي</a>
+                <a href="books/الكتب الفكرية والفلسفية/رجال العراق والاحتلال البريطاني/رجال_العراق_والاحتلال_البريطاني_سعيد_رشيد_مجيد_زميزم_1990م (1).pdf" download target="_blank"><i class="fas fa-download"></i>  رجال العراق والاحتلال البريطاني </a>
+                <a href="books/الكتب الفكرية والفلسفية/خمسه اعوام في الدولة العثمانية/خمسة أعوام في الدولة العثمانية.pdf" download target="_blank"><i class="fas fa-download"></i>  خمسه اعوام في الدولة العثمانية </a>
+                <a href="books/الكتب الفكرية والفلسفية/الصعاليك في العصر الجاهلي/الصعاليك_في_العصر_الجاهلي_أخبارهم_وأشعارهم_محمد_رضا_مروة.pdf" download target="_blank"><i class="fas fa-download"></i>  الصعاليك في العصر الجاهلي</a>
+                <a href="books/الكتب الفكرية والفلسفية/الدين والسياسة في التاريخ الاسلامي/الدين_و_السياسة_في_التاريخ_الإسلامي_عبدالرحمن_شلقم.pdf" download target="_blank"><i class="fas fa-download"></i>  الدين والسياسة في التاريخ الاسلامي</a>
+                <a href="books/الكتب التاريخيه/حرب الصحراء/حرب في الصحراء .. مذكرات غلوب باشا.pdf" download target="_blank"><i class="fas fa-download"></i> حرب الصحراء</a>
+                <a href="books/الكتب التاريخيه/تاريخ العرب في جزيرة العرب/تاريخ العرب - هويلاند.pdf" download target="_blank"><i class="fas fa-download"></i> تاريخ العرب في جزيرة العرب</a>
+                <a href="books/الكتب التاريخيه/انتقام الجغرافيا/انتقام الجغرافيا.pdf" download target="_blank"><i class="fas fa-download"></i> انتقام الجغرافيا</a>
+                <a href="books/الكتب التاريخيه/انبئوني بالرؤيا/أنبئوني_بالرؤيا_رواية_لـ_عبد_الفتاح_كيليطو.pdf" download target="_blank"><i class="fas fa-download"></i> أنبئوني بالرؤيا</a>
+                <a href="books/الكتب التاريخيه/المكتبة المتنقلة/المكتبة_المتنقلة_،_كريستوفر_مورلي.pdf" download target="_blank"><i class="fas fa-download"></i> المكتبة المتنقلة</a>
+                <a href="books/الكتب التاريخيه/nهاية والبداية/البداية_والنهاية_فيسوافا_شيمبورسكا_.pdf" download target="_blank"><i class="fas fa-download"></i> النهاية والبداية</a>
+                <a href="books/الكتب التاريخيه/المماليك/المماليك_من_القرن_الثالث_عشر_حتى_القرن_السادس_عشر.pdf" download target="_blank"><i class="fas fa-download"></i> المماليك</a>
+                <a href="books/الكتب التاريخيه/الفتوح العربية الكبرئ/الفتوح العربية الكبرى.pdf" download target="_blank"><i class="fas fa-download"></i> الفتوح العربية الكبرى</a>
+                <a href="books/الكتب التاريخيه/الطائف/الطائف - مصورات العتيبي.pdf" download target="_blank"><i class="fas fa-download"></i> الطائف</a>
+                <a href="books/الكتب التاريخيه/التعليقات والنوادر/التعليقات_والنوادر_لأبي_علي_الهجري.pdf" download target="_blank"><i class="fas fa-download"></i> التعليقات والنوادر</a>
+                <a href="books/الكتب التاريخيه/الزنبقة الحمراء/الزنبقة الحمراء - أناتول فرانس.pdf" download target="_blank"><i class="fas fa-download"></i> الزنبقة الحمراء</a>
+                <a href="books/الكتب التاريخيه/البيت الصامت/البيت الصامت - اورهان باموق.pdf" download target="_blank"><i class="fas fa-download"></i> البيت الصامت</a>
+                <a href="books/الكتب التاريخيه/الامير الثائر/الأمير_الثائر_علي_بن_محمد_بن_عائض.pdf" download target="_blank"><i class="fas fa-download"></i> الأمير الثائر</a>
+                <a href="books/الكتب التاريخيه/الارض الموعودة/الأرض_الموعودة_خطة_الصهيونية_من_الثمانينات.pdf" download target="_blank"><i class="fas fa-download"></i> الأرض الموعودة</a>
+                <a href="books/الكتب التاريخيه/ابن خلدون/ابن خلدون_أعلام ومبدعون.pdf" download target="_blank"><i class="fas fa-download"></i> ابن خلدون</a>
+                <a href="books/الكتب العلمية/تعرف علئ جيرانك/تعرَّف_على_جيرانك.pdf" download target="_blank"><i class="fas fa-download"></i> تعرف علئ جيرانك</a>
+
+                <a href="books/الكتب العلمية/تغير المناخ/تغيُّر_المناخ.pdf" download target="_blank"><i class="fas fa-download"></i> تغير المناخ</a>
+
+                <a href="books/الكتب العلمية/الكيمياء الفيزيائية/الكيمياء_الفيزيائية.pdf" download target="_blank"><i class="fas fa-download"></i> الكيمياء الفيزيائية</a>
+
+                <a href="books/الكتب العلمية/علم الأحياء التخليقي/علم_الأحياء_التخليقي.pdf" download target="_blank"><i class="fas fa-download"></i> علم الأحياء التخليقي</a>
+
+                <a href="books/الكتب العلمية/علم الأحياء البحرية/علم_الأحياء_البحرية.pdf" download target="_blank"><i class="fas fa-download"></i> علم الأحياء البحرية</a>
+
+                <a href="books/الكتب العلمية/الكيمياء الحيوية/الكيمياء_الحيوية.pdf" download target="_blank"><i class="fas fa-download"></i> الكيمياء الحيوية</a>
+
+                <a href="books/الكتب العلمية/علم الكمبيوتر/علم_الكمبيوتر.pdf" download target="_blank"><i class="fas fa-download"></i> علم الكمبيوتر</a>
+
+                <a href="books/الكتب العلمية/علم نظام الأرض/علم_نظام_الأرض.pdf" download target="_blank"><i class="fas fa-download"></i> علم نظام الأرض</a>
+
+                <a href="books/الكتب العلمية/علم الروبوتات/علم_الروبوتات.pdf" download target="_blank"><i class="fas fa-download"></i> علم الروبوتات</a>
+    
+                <a href="books/الكتب العلمية/علم التشفير/علم_التشفير.pdf" download target="_blank"><i class="fas fa-download"></i> علم التشفير</a>
+
+                <a href="books/الكتب العلمية/علم الإحصاء/علم_الإحصاء.pdf" download target="_blank"><i class="fas fa-download"></i> علم الإحصاء</a>
+
+                <a href="books/الكتب العلمية/علم أدب النفس/علم_أدب_النفس.pdf" download target="_blank"><i class="fas fa-download"></i> علم أدب النفس</a>
+
+                <a href="books/الكتب العلمية/علم الأوبئة/علم_الأوبئة.pdf" download target="_blank"><i class="fas fa-download"></i> علم الأوبئة</a>
+
+                <a href="books/الكتب العلمية/الرياضيات/الرياضيات.pdf" download target="_blank"><i class="fas fa-download"></i> الرياضيات</a>
+
+                <a href="books/الكتب العلمية/الفيروسات/الفيروسات.pdf" download target="_blank"><i class="fas fa-download"></i> الفيروسات</a>
+
+                <a href="books/الكتب العلمية/فيزياء الجسيمات/فيزياء_الجسيمات.pdf" download target="_blank"><i class="fas fa-download"></i> فيزياء الجسيمات</a>
+                <a href="books/الخيال العلمي/الطاعون القرمزي/الطاعون_القرمزي.pdf" download target="_blank"><i class="fas fa-download"></i> الطاعون القرمزي</a>
+
+                <a href="books/الخيال العلمي/الزيارة المدهشة/الزيارة_المدهشة.pdf" download target="_blank"><i class="fas fa-download"></i> الزيارة المدهشة</a>
+
+                <a href="books/الخيال العلمي/حربنا مع إمارة موناكو/حربنا_مع_إمارة_موناكو.pdf" download target="_blank"><i class="fas fa-download"></i> حربنا مع إمارة موناكو</a>
+
+                <a href="books/الخيال العلمي/قصة الأيام القادمة/قصة_الأيام_القادمة.pdf" download target="_blank"><i class="fas fa-download"></i> قصة الأيام القادمة</a>
+
+                <a href="books/الخيال العلمي/شريد في مملكة السحر/شريد_في_مملكة_السحر.pdf" download target="_blank"><i class="fas fa-download"></i> شريد في مملكة السحر</a>
+
+                <a href="books/الخيال العلمي/رجل بلا جسد/رجل_بلا_جسد.pdf" download target="_blank"><i class="fas fa-download"></i> رجل بلا جسد</a>
+
+                <a href="books/الخيال العلمي/تجربة الدكتور أوكس/تجربة_الدكتور_أوكس.pdf" download target="_blank"><i class="fas fa-download"></i> تجربة الدكتور أوكس</a>
+
+                <a href="books/الخيال العلمي/تحوُّل/تحوُّل.pdf" download target="_blank"><i class="fas fa-download"></i> تحوُّل</a>
+
+                <a href="books/الخيال العلمي/تجربة جامعة كاينبلاتس الكبرى/تجربة_جامعة_كاينبلاتس_الكبرى.pdf" download target="_blank"><i class="fas fa-download"></i> تجربة جامعة كاينبلاتس الكبرى</a>
+
+                <a href="books/الخيال العلمي/لاسلكيًّا/لاسلكيًّا.pdf" download target="_blank"><i class="fas fa-download"></i> لاسلكيًّا</a>
+
+                <a href="books/الخيال العلمي/الأرض المسطحة/الأرض_المسطحة.pdf" download target="_blank"><i class="fas fa-download"></i> الأرض المسطحة</a>
+
+                <a href="books/الخيال العلمي/الأخ الأصغر/الأخ_الأصغر.pdf" download target="_blank"><i class="fas fa-download"></i> الأخ الأصغر</a>
+
+                <a href="books/الخيال العلمي/الخروج دون حفظ/الخروج_دون_حفظ.pdf" download target="_blank"><i class="fas fa-download"></i> الخروج دون حفظ</a>
+
+                <a href="books/الخيال العلمي/آلة الزمن/آلة_الزمن.pdf" download target="_blank"><i class="fas fa-download"></i> آلة الزمن</a>
+
+                <a href="books/الخيال العلمي/الكشف عن راما/الكشف_عن_راما.pdf" download target="_blank"><i class="fas fa-download"></i> الكشف عن راما</a>
+
+                <a href="books/الخيال العلمي/حرب العوالم/حرب_العوالم.pdf" download target="_blank"><i class="fas fa-download"></i> حرب العوالم</a>
+                <a href="books/قسم القصص البوليسيىة/الخوف يطارد القرية/الخوف_يطارد_القرية.pdf" download target="_blank"><i class="fas fa-download"></i> الخوف يطارد القرية</a>
+
+                <a href="books/قسم القصص البوليسيىة/قضية فندق سميراميس/قضية_فندق_سميراميس.pdf" download target="_blank"><i class="fas fa-download"></i> قضية فندق سميراميس</a>
+
+                <a href="books/قسم القصص البوليسيىة/الرهائن الثلاث/الرهائن_الثلاث.pdf" download target="_blank"><i class="fas fa-download"></i> الرهائن الثلاث</a>
+
+                <a href="books/قسم القصص البوليسيىة/لغز المنزل ٣١ نيو إن/لغز_المنزل_٣١_نيو_إن.pdf" download target="_blank"><i class="fas fa-download"></i> لغز المنزل ٣١ نيو إن</a>
+
+                <a href="books/قسم القصص البوليسيىة/عدالة الآنسة بيم/عدالة_الآنسة_بيم.pdf" download target="_blank"><i class="fas fa-download"></i> عدالة الآنسة بيم</a>
+
+                <a href="books/قسم القصص البوليسيىة/خطوة في الظلام/خطوة_في_الظلام.pdf" download target="_blank"><i class="fas fa-download"></i> خطوة في الظلام</a>
+
+                <a href="books/قسم القصص البوليسيىة/ثماني جرائم كاملة/ثماني_جرائم_كاملة.pdf" download target="_blank"><i class="fas fa-download"></i> ثماني جرائم كاملة</a>
+
+                <a href="books/قسم القصص البوليسيىة/اللعبة القاتلة/اللعبة_القاتلة.pdf" download target="_blank"><i class="fas fa-download"></i> اللعبة القاتلة</a>
+
+                <a href="books/قسم القصص البوليسيىة/رجال العدالة الثلاثة/رجال_العدالة_الثلاثة.pdf" download target="_blank"><i class="fas fa-download"></i> رجال العدالة الثلاثة</a>
+
+                <a href="books/قسم القصص البوليسيىة/ابنة الزمن/ابنة_الزمن.pdf" download target="_blank"><i class="fas fa-download"></i> ابنة الزمن</a>
+
+                <a href="books/قسم القصص البوليسيىة/الرمال المُغنية/الرمال_المُغنية.pdf" download target="_blank"><i class="fas fa-download"></i> الرمال المُغنية</a>
+
+                <a href="books/قسم القصص البوليسيىة/لغز جرس التصويت/لغز_جرس_التصويت.pdf" download target="_blank"><i class="fas fa-download"></i> لغز جرس التصويت</a>
+
+                <a href="books/قسم القصص البوليسيىة/قضية منزل فرنتشايز/قضية_منزل_فرنتشايز.pdf" download target="_blank"><i class="fas fa-download"></i> قضية منزل فرنتشايز</a>
+
+                <a href="books/قسم القصص البوليسيىة/صرخة في سوهو/صرخة_في_سوهو.pdf" download target="_blank"><i class="fas fa-download"></i> صرخة في سوهو</a>
+
+                <a href="books/قسم القصص البوليسيىة/جريمتا واجهة العرض/جريمتا_واجهة_العرض.pdf" download target="_blank"><i class="fas fa-download"></i> جريمتا واجهة العرض</a>
+                <a href="books/من تراثنا العربي/رسائل الجاحظ/رسائل_الجاحظ.pdf" download target="_blank">
+                <i class="fas fa-download"></i> رسائل الجاحظ
+                </a>
+
+                <a href="books/من تراثنا العربي/البيان والتبيين/البيان_والتبيين.pdf" download target="_blank">
+                <i class="fas fa-download"></i> البيان والتبيين
+                </a>
+
+                <a href="books/من تراثنا العربي/الأدب الكبير/الأدب_الكبير.pdf" download target="_blank">
+                <i class="fas fa-download"></i> الأدب الكبير
+                </a>
+
+                <a href="books/من تراثنا العربي/كليلة ودمنة/كليلة_ودمنة.pdf" download target="_blank">
+                  <i class="fas fa-download"></i> كليلة ودمنة
+                </a>
+
+                <a href="books/من تراثنا العربي/آراء أهل المدينة الفاضلة/آراء_أهل_المدينة_الفاضلة.pdf" download target="_blank">
+                <i class="fas fa-download"></i> آراء أهل المدينة الفاضلة
+                </a>
+
+                a href="books/من تراثنا العربي/رسالة الغفران/رسالة_الغفران.pdf" download target="_blank">
+                 <i class="fas fa-download"></i> رسالة الغفران
+                /a>
+
+                <a href="books/من تراثنا العربي/المقدمة/المقدمة.pdf" download target="_blank">
+                <i class="fas fa-download"></i> المقدمة
+                    </a>
+
+                <a href="books/من تراثنا العربي/العقد الفريد/العقد_الفريد.pdf" download target="_blank">
+                <i class="fas fa-download"></i> العقد الفريد
+                </a>
+
+                <a href="books/من تراثنا العربي/الأغاني/الأغاني.pdf" download target="_blank">
+                <i class="fas fa-download"></i> الأغاني
+                </a>
+
+                <a href="books/من تراثنا العربي/نهج البلاغة/نهج_البلاغة.pdf" download target="_blank">
+                <i class="fas fa-download"></i> نهج البلاغة
+                </a>
+
+
+            
+        </div>
+
+        <!-- كتب مميزة -->
+        <div class="featured-books">
+            <!-- الكتاب 1 -->
+                       <!-- الكتاب 1 -->
+            <div class="book-card">
+                <img src="books/islamic books/سيره الحبيب/سيره محمد.jpg" alt="كتاب سيرة رسول الله">
+                <h3>كتاب سيرة رسول الله</h3>
+                <span class="author">ابن طرخان</span>
+                <p class="description">سيرة شاملة لرسول الله صلى الله عليه وسلم، تتبع مراحل حياته ودعوته، وتقدم تحليلاً عميقاً لأخلاقه وصفاته وأساليب تعامله مع مختلف التحديات.</p>
+                <a href="books/islamic books/سيره الحبيب/كتاب سيرة رسول الله - ابن طرخان.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/islamic books/الاعتبار من سير الأبرار/الاعتبار من سير الأبرا.jpg" alt="الاعتبار من سير الأبرار">
+                <h3>الاعتبار من سير الأبرار</h3>
+                <span class="author">هنا وطفة</span>
+                <p class="description">دراسة تحليلية لسير الأنبياء والصالحين، تستخلص الدروس والعبر من حياتهم، وتقدم رؤية تربوية للاستفادة من تجاربهم في حياتنا المعاصرة.</p>
+                <a href="books/islamic books/الاعتبار من سير الأبرار/الاعتبار من سير الأبرار.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/islamic books/كتاب عالمُ الأنبياء/Screenshot 2025-09-04 213144.png" alt="عالم الأنبياء">
+                <h3>عالم الأنبياء</h3>
+                <span class="author">تقى سرور</span>
+                <p class="description">رحلة معرفية في حياة الأنبياء والرسل، تبرز جوانب العظمة في دعواتهم، وتكشف عن الحكمة الإلهية في اختيارهم وترتيب بعثتهم عبر التاريخ.</p>
+                <a href="books/islamic books/كتاب عالمُ الأنبياء/كتاب عالمُ الأنبياء.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/islamic books/بلوغ المرام/بلوغ المرام.jpg" alt="بلوغ المرام">
+                <h3>بلوغ المرام</h3>
+                <span class="author">صفي الرحمن</span>
+                <p class="description">موسوعة حديثية شاملة تجمع أحاديث الأحكام مرتبة حسب الموضوعات الفقهية، مع شرح مختصر وبيان درجات الأحاديث وأهميتها في الاستدلال.</p>
+                <a href="books/islamic books/بلوغ المرam/بلوغ المرام - ت. يوسف بديوي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/islamic books/المنتخب/المنتخب.jpg" alt="المنتخب">
+                <h3>المنتخب</h3>
+                <span class="author">نخبة من العلماء</span>
+                <p class="description">مجموعة منتقاة من أحاديث الآداب والأخلاق النبوية، تهدف إلى تربية النفس وتزكيتها، وتعزيز القيم الإسلامية في السلوك اليومي.</p>
+                <a href="books/islamic books/المنتخب/المنتخب_من_أحاديث_الآداب_والأخلاق_طبعة_مجمع_الملك_فهد.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/islamic books/رياض الصالحين/رياض الصالحينز.jpg" alt="رياض الصالحين">
+                <h3>رياض الصالحين</h3>
+                <span class="author">الإمام النووي</span>
+                <p class="description">من أشهر كتب الحديث التي جمعت الأحاديث الصحيحة في التربية والأخلاق والعبادات، يرتبها الإمام النووي في أبواب موضوعية مع شرح موجز.</p>
+                <a href="books/islamic books/رياض الصالحين/رياض_الصالحين_من_كلام_سيد_المرسلين،_ت_الفحل.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/islamic books/تحقيق نصوص علوم القران الكريم/تحقيق نصوص علوم القران الكريم.jpg" alt="تحقيق نصوص علوم القرآن الكريم">
+                <h3>تحقيق نصوص علوم القرآن الكريم</h3>
+                <span class="author">غانم قدوري</span>
+                <p class="description">بحث منهجي في قضايا تحقيق نصوص علوم القرآن، يقدم ضوابط وأسساً علمية للتعامل مع المخطوطات القرآنية وضبط النصوص وتحقيقها.</p>
+                <a href="books/islamic books/تحقيق نصوص علوم القران الكريم/تحقيق_نصوص_علوم_القرآن_الكريم،_قضايا_منهجية_وموضوعية_غانم_قدوري.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/islamic books/الجزاء من جنس العمل/الجزاء من جنس العمل.jpg" alt="الجزاء من جنس العمل">
+                <h3>الجزاء من جنس العمل</h3>
+                <span class="author">خالد السبت</span>
+                <p class="description">دراسة تحليلية لقاعدة "الجزاء من جنس العمل" في القرآن الكريم، تبرز العلاقة بين العمل ونتيجته، وتكشف عن الحكمة الإلهية في نظام الجزاء.</p>
+                <a href="books/islamic books/الجزاء من جنس العمل/قاعدة_الجزاء_من_جنس_العمل_وتطبيقاتها_في_القرآن_الكريم_خالد_السبت.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/islamic books/نضرات في التفسير الماثور/نضرات في التفسير الماثور.jpg" alt="نضرات في التفسير المأثور">
+                <h3>نضرات في التفسير المأثور</h3>
+                <span class="author">خالد السبت</span>
+                <p class="description">رؤى تحليلية في منهج التفسير بالمأثور، تبرز مكانته وأهميته، وتناقش قضاياه المنهجية وتطوره التاريخي ومصادره المعتمدة.</p>
+                <a href="books/islamic books/نضرات في التفسير الماثور/نظرات_في_التفسير_بالمأثور_خالد_السبت.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/islamic books/المختصر/المختصر.jpg" alt="المختصر">
+                <h3>المختصر</h3>
+                <span class="author">ضياء الدين خليل بن إسحاق الجندي المالكي</span>
+                <p class="description">مختصر في الفتوى على مذهب الإمام مالك بن أنس، يعد من أهم المتون الفقهية في المذهب المالكي، ويحظى باهتمام كبير لدى دارسي الفقه.</p>
+                <a href="books/islamic books/المختصر/المختصر_في_الفتوى_بمذهب_مالك_بن_انس_المعروف_بمختصر_خليل.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/islamic books/مختصر منهاج اهل السنه/مختصر منهاج اهل السنه.jpg" alt="مختصر منهاج أهل السنة">
+                <h3>مختصر منهاج أهل السنة</h3>
+                <span class="author">ابن تيمية</span>
+                <p class="description">اختصار لكتاب منهاج السنة النبوية، يقدم عرضاً موجزاً لأصول عقيدة أهل السنة والجماعة ورد الشبهات حولها، بأسلوب واضح وميسر.</p>
+                <a href="books/islamic books/مختصر منهاج اهل السنه/مختصر_منهاج_السنة_لابن_تيمية_عبدالله_الغنيمان.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/islamic books/شرح مقدمة تفسير ابن عطية/شرح مقدمة تفسير ابن عطية.jpg" alt="شرح مقدمة تفسير ابن عطية">
+                <h3>شرح مقدمة تفسير ابن عطية</h3>
+                <span class="author">مساعد الطيار</span>
+                <p class="description">شرح وتحليل لمقدمة تفسير ابن عطية التي تعد من أهم المقدمات في علم التفسير، حيث تبين أصول التفسير وقواعده ومناهج المفسرين.</p>
+                <a href="books/islamic books/شرح مقدمة تفسير ابن عطية/شرح_مقدمة_تفسير_ابن_عطية_مساعد_الطيار.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/islamic books/مختصر الروضة (البلبل في أصول الفقه)/مختصر الروضة (البلبل في أصول الفقه).jpg" alt="مختصر الروضة (البلبل في أصول الفقه)">
+                <h3>مختصر الروضة (البلبل في أصول الفقه)</h3>
+                <span class="author">سليمان بن عبد القوي الطوفي الحنبلي</span>
+                <p class="description">مختصر لكتاب روضة الناظر في أصول الفقه، يقدم عرضاً ميسراً لأصول الفقه وقواعده، مع أمثلة تطبيقية توضح كيفية الاستدلال والاستنباط.</p>
+                <a href="books/islamic books/مختصر الروضة (البلبل في أصول الفقه)/مختصر_الروضة_البلبل_في_أصول_الفقه_.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/islamic books/المسكت/المسكت.jpg" alt="المسكت">
+                <h3>المسكت</h3>
+                <span class="author">أحمد بن عمر الخفاف</span>
+                <p class="description">بحث في المسكت والأقسام والخصال وشرائط الأحكام، يقدم دراسة فقهية معمقة لمسائل الأحكام وشروطها، مع الاستدلال بالأدلة الشرعية.</p>
+                <a href="books/islamic books/المسكت/المسكت_و_الأقسام_والخصال_و_شرائط_الأحكام.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/islamic books/السحر/السحر.jpg" alt="السحر">
+                <h3>السحر</h3>
+                <span class="author">هيفاء الرشيد</span>
+                <p class="description">دراسة شاملة للسحر من منظور إسلامي، تبحث في أنواعه وأحكامه وتطبيقاته المعاصرة، وتبين حكمه الشرعي وطرق الوقاية والعلاج منه.</p>
+                <a href="books/islamic books/السحر/السحر_،_أنواعه_وأحكامه_وتطبيقاته_المعاصرة_هيفاء_الرشيد.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 16 -->
+            <div class="book-card">
+                <img src="books/islamic books/الجهل بمسائل الاعتقاد والحكمه/الجهل بمسائل الاعتقاد والحكمه.jpg" alt="الجهل بمسائل الاعتقاد وحكمه">
+                <h3>الجهل بمسائل الاعتقاد وحكمه</h3>
+                <span class="author">عبدالرزاق معاش</span>
+                <p class="description">بحث في حكم الجهل بمسائل الاعتقاد، يبين ضوابط التكليف والعذر بالجهل، ويحدد المسائل التي يعذر فيها الجاهل والتي لا يعذر فيها.</p>
+                <a href="books/islamic books/الجهل بمسائل الاعتقاد والحكمه/الجهل_بمسائل_الاعتقاد_وحكمه_عبدالرزاق_معاش (1).pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/مواجهه الصحرا/مواجهة_الصحراء.jpg" alt="مواجهة الصحراء">
+                <h3>مواجهة الصحراء</h3>
+                <span class="author">كنود هولمبو</span>
+                <p class="description">رحلة أدبية شيقة عبر صحاري شمال أفريقيا، تروي تجارب الكاتب واستكشافاته في البيئات الصحراوية القاسية والجميلة، وتكشف عن ثقافات سكانها وتقاليدهم.</p>
+                <a href="books/الكتب الادبيه/مواجهه الصحرا/مواجهة_الصحراء_مغامرات_عبر_شمال_أفريقيا_كنود_هولمبو.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/ما اردنا قوله من البدايه/ما اردنا قوله من البدايه.jpg" alt="ما أردنا قوله من البداية">
+                <h3>ما أردنا قوله من البداية</h3>
+                <span class="author">علي صلاح بلداوي</span>
+                <p class="description">عمل أدبي يعبر عن رؤية الكاتب وتجاربه العميقة، يقدم تأملات في الحياة والإنسان والمجتمع بأسلوب شعري مميز وبلغة عربية رصينة.</p>
+                <a href="books/الكتب الادبيه/ما اردنا قوله من البدايه/ما_أردت_قوله_من_البداية_علي_صلاح_بلداوي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/رساله الئ الجنرال فرانكو/رساله الئ الجنرال فرانكو.jpg" alt="رسالة إلى الجنرال فرانكو">
+                <h3>رسالة إلى الجنرال فرانكو</h3>
+                <span class="author">عمار الأنسي</span>
+                <p class="description">نص أدبي نقدي يوجه رسالة قوية للجنرال فرانكو، يعبر من خلالها عن موقف أدبي وسياسي من حقبة تاريخية مهمة، بأسلوب أدبي رفيع.</p>
+                <a href="books/الكتب الادبيه/رساله الئ الجنرال فرانko/رسالة إلى الجنرال فرانكو.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/ردع الاعداء داخل البلاد وخارجها/ردع الاعداء داخل البلاد وخارجها.jpg" alt="ردع الأعداء داخل البلاد وخارجها">
+                <h3>ردع الأعداء داخل البلاد وخارجها</h3>
+                <span class="author">وليام جونسون</span>
+                <p class="description">دراسة استراتيجية وأدبية حول أساليب مواجهة التهديدات والأعداء، تقدم تحليلاً عميقاً لاستراتيجيات الردع في السياقات الوطنية والدولية.</p>
+                <a href="books/الكتب الادبيه/ردع الاعداء داخل البلاد وخارجها/ردع الأعداء داخل البلاد وخارجها.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/حقائق وثوابت في القظية الفلطينية/حقائق وثوابت في القظية الفلطينية.jpg" alt="حقائق وثوابت في القضية الفلسطينية">
+                <h3>حقائق وثوابت في القضية الفلسطينية</h3>
+                <span class="author">محسن محمد صالح</span>
+                <p class="description">عمل توثيقي وأدبي يقدم رؤية إسلامية للقضية الفلسطينية، يسلط الضوء على الحقائق التاريخية والثوابت الشرعية المتعلقة بهذه القضية المركزية.</p>
+                <a href="books/الكتب الادبيه/حقائق وثوابت في القظية الفلطينية/حقائق_وثوابت_في_القضية_الفلسطينية_رؤية_إسلامية.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/جمهرة البلاغة/جمهرة البلاغة.jpg" alt="جمهرة البلاغة">
+                <h3>جمهرة البلاغة</h3>
+                <span class="author">عبدالحميد الفراهي</span>
+                <p class="description">موسوعة أدبية شاملة في علم البلاغة العربية، تجمع أهم أبواب البلاغة وفنونها، وتقدم أمثلة تطبيقية من الشعر والنثر العربي الأصيل.</p>
+                <a href="books/الكتب الادبيه/جمهرة البلاغة/جمهرة_البلاغة_للعلامة_عبدالحamid_الفراهي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/امواج/امواج.jpg" alt="أمواج">
+                <h3>أمواج</h3>
+                <span class="author">عبدالله إبراهيم</span>
+                <p class="description">سيرة أدبية عراقية تروي تجارب الكاتب وحكاياته في رحلة الحياة، تعكس صورة المجتمع العراقي وتقلباته عبر أمواج الزمن وتياراته المتغيرة.</p>
+                <a href="books/الكتب الادبيه/امواج/أمواج_سيرة_عراقية_عبد_الله_إبراهيم.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/الخنجر المرهون/الخنجر المرهون.jpg" alt="الخنجر المرهون">
+                <h3>الخنجر المرهون</h3>
+                <span class="author">سلطان بن محمد القاسمي</span>
+                <p class="description">عمل أدبي تاريخي يروي قصة الخنجر المرهون كرمز تراثي وثقافي، ويكشف عن دلالاته الاجتماعية والتاريخية في الثقافة العربية والإسلامية.</p>
+                <a href="books/الكتب الادبيه/الخنجر المرهون/الخنجر_المرهون_سلطان_بن_محمد_القاسمي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/العربية الاولئ/العربية الاولئ.jpg" alt="نجيب محفوظ كاتب العربية الأول">
+                <h3>نجيب محفوظ كاتب العربية الأول</h3>
+                <span class="author">فؤاد قنديل</span>
+                <p class="description">دراسة أدبية نقدية تبرز مكانة نجيب محفوظ كأحد أبرز كتاب العربية، وتحلل أعماله الأدبية وتأثيرها في تطوير الرواية العربية الحديثة.</p>
+                <a href="books/الكتب الادبيه/العربية الاولئ/نجيب_محفوظ_كاتب_العربية_الأول_فؤاد_قنديل.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/شرفة العار/شرفة العار.jpg" alt="شرفة العار">
+                <h3>شرفة العار</h3>
+                <span class="author">إبراهيم نصر الله</span>
+                <p class="description">رواية أدبية عميقة تبحث في قضايا الشرف والعار في المجتمعات العربية، تقدم نقداً اجتماعياً لاذعاً بأسلوب روائي متميز وجذاب.</p>
+                <a href="books/الكتب الادبيه/شرفة العار/شرفة العار ل إبراهيم نصر الله .pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/رحلات فارتيما/رحلات فارتيما.jpg" alt="رحلات فارتيما">
+                <h3>رحلات فارتيما</h3>
+                <span class="author">الحاج يونس المصري</span>
+                <p class="description">سرد أدري لرحلات المستكشف فارتيما، تقدم وصفاً دقيقاً لرحلاته واستكشافاته في العالم العربي والإسلامي، برؤية أدبية وتاريخية ثرية.</p>
+                <a href="books/الكتب الادبيه/رحلات فارتيma/رحلات فارتيما الحاج يونس المصري.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/التراث التربوي الاسلامي/التراث التربوي الاسلامي.jpg" alt="التراث التربوي الإسلامي">
+                <h3>التراث التربوي الإسلامي</h3>
+                <span class="author">فتحي حسن</span>
+                <p class="description">دراسة أكاديمية تبحث في التراث التربوي الإسلامي، تتبع تطوره التاريخي وتقدم لمحات من إسهاماته وأثره في تشكيل الفكر التربوي الإسلامي.</p>
+                <a href="books/الكتب الادبيه/التراث التربوي الاسلامي/التراث_التربوي_الإسلامي_حالة_البحث_فيه،_ولمحات_من_تطوره،_وقطوف_من.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/منظومة القيم المقاصدية/منظومة القيم المقاصدية.jpg" alt="منظومة القيم المقاصدية">
+                <h3>منظومة القيم المقاصدية</h3>
+                <span class="author">فتحي حسن</span>
+                <p class="description">بحث في القيم المقاصدية وتجلياتها التربوية، يقدم رؤية منهجية لربط القيم الإسلامية بالمقاصد الشرعية وتطبيقاتها في المجال التربوي.</p>
+                <a href="books/الكتب الادبيه/منظومة القيم المقاصدية/القيم_المقاصدية_وتجلياتها_التربوية.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/القيم الجامعية/القيم الجامعية.jpg" alt="القيم الجامعية">
+                <h3>القيم الجامعية</h3>
+                <span class="author">فتحي حسن</span>
+                <p class="description">دراسة فلسفية تربوية تبحث في فلسفة القيم الجامعية ومرجعيتها وتجلياتها، تقدم رؤية متكاملة لدور الجامعة في تعزيز القيم وبناء الشخصية.</p>
+                <a href="books/الكتب الادبيه/القيم الجامعية/القيم_الجامعية_فilosفتها_ومرجعيتها_وتجلياتها.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/التربيه الفكرية/التربيه الفكرية.jpg" alt="التربية الفكرية">
+                <h3>التربية الفكرية</h3>
+                <span class="author">المعهد العالمي للفكر الإسلامي</span>
+                <p class="description">بحث في التربية الفكرية في سياق النهوض الحضاري المنشود، يقدم رؤية استراتيجية لتطوير الفكر الإسلامي وتعزيز القدرات الفكرية للأمة.</p>
+                <a href="books/الكتب الادبيه/التربيه الفكرية/التربية_الفكرية_في_سياق_النهوض_الحضاري_المنشود.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 16 -->
+            <div class="book-card">
+                <img src="books/الكتب الادبيه/سنا البرق التهامي/سنا البرق التهامي.jpg" alt="سنا البرق التهامي">
+                <h3>سنا البرق التهامي</h3>
+                <span class="author">أبي شيبة الحازمي</span>
+                <p class="description">عمل أدبي تاريخي يروي سيرة أبناء الشريف أبي شيبة الحازمي، ويكشف عن إسهاماتهم وأدوارهم في التاريخ العربي والإسلامي بأسلوب أدبي رفيع.</p>
+                <a href="books/الكتب الادبيه/سنا البرق التهامي/سna_البرق_التهامي_في_أبناء_الشريف_أبي_شيبة_الحازمي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/التحليل القصصي في البحث العلمي/التحليل القصصي في البحث العلمي.jpg" alt="التحليل القصصي في البحث العلمي" class="book-image">
+                <h3>التحليل القصصي في البحث العلمي</h3>
+                <span class="author"> فارس البياتي</span>
+                 <p class="description">يقدم هذا الكتاب منهجية مبتكرة لاستخدام السرد القصصي كأداة تحليلية في البحث العلمي. يوضح الكيفية التي يمكن بها توظيف القصص لفهم الظواهر الاجتماعية المعقدة وتفسيرها، مع تقديم أمثلة تطبيقية وأطر نظرية متينة. دليل قيم للباحثين في العلوم الإنسانية والاجتماعية.</p>
+                <a href="books/الكتب الفكرية والفلسفية/التحليل القصصي في البحث العلمي/التحليل_القصصي_في_البحث_العلمي_توظيف_السرد_كأداة_للكشف_والتفسير.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/ديوان ابن سهل الاندلسي/ديوان ابن سهل الاندلسي.jpg" alt="ديوان ابن سهل الاندلسي" class="book-image">
+                <h3>ديوان ابن سهل الاندلسي</h3>
+                <span class="author">إحسان عباس</span>
+                <p class="description">إبداع شعري يجسد روح الأندلس وحضارتها الزاهية، يجمع بين جزالة اللفظ وعمق المعنى وجمال التصوير.</p>
+                <a href="books/الكتب الفكرية والفلسفية/ديوان ابن سهل الاندلسي/ديوان ابن سهل ط صادر.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/تمهيد لتاريخ المدرسه الاسكندرية/تمهيد لتاريخ المدرسه الاسكندرية.jpg" alt="تمهيد لتاريخ المدرسه الاسكندرية" class="book-image">
+                <h3>تمهيد لتاريخ المدرسه الاسكندرية</h3>
+                <span class="author">نجيب بدري</span>
+                <p class="description">رحلة في أعماق الفكر الإغريقي والهلنستي، تتبع تطور الفلسفة والعلوم في واحدة من أعرق المدارس الفكرية.</p>
+                <a href="books/الكتب الفكرية والفلسفية/تمهيد لتاريخ المدرسه الاسكندرية/تمهيد_لتاريخ_مدرسة_الإسكندرية_وفلسفتها♦.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+                        <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/مراسلات ال الحفظي/مراسلات ال الحفظي.jpg" alt="مراسلات ال الحفظي" class="book-image">
+                <h3>مراسلات ال الحفظي</h3>
+                <span class="author">أحمد بن محمد</span>
+                <p class="description">مراسلات أدبية وفكرية تقدم نظرة ثرية على تبادل الأفكار والرؤى بين أدباء ومفكري عصرهم، وتكشف عن عمق العلاقات الثقافية.</p>
+                <a href="books/الكتب الفكرية والفلسفية/مراسلات ال الحفظي/مراسلات آل الحفظي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/مذكرات رستم حيدر/مذكرات رستم حيدر.jpg" alt="مذكرات رستم حيدر" class="book-image">
+                <h3>مذكرات رستم حيدر</h3>
+                <span class="author">نجدة فتحي</span>
+                <p class="description">سيرة ذاتية مميزة تقدم رؤية عميقة لتجربة سياسية وفكرية فريدة، وتكشف عن تفاصيل مهمة من تاريخ المنطقة.</p>
+                <a href="books/الكتب الفكرية والفلسفية/مذكرات رستم حيدر/مذكرات رستم حيدر.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/نفح العود/نفح العود.jpg" alt="نفح العود" class="book-image">
+                <h3>نفح العود</h3>
+                <span class="author">عبدالرحمن بن أحمد</span>
+                <p class="description">تحفة أدبية تجمع بين البلاغة والفلسفة، تقدم رؤية نقدية للأدب العربي الكلاسيكي وتأثيراته على الفكر الحديث.</p>
+                <a href="books/الكتب الفكرية والفلسفية/نفح العود/نفح العود - تحقيق الصميلي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/المثقفون المغالطون/المثقفون المغالطون.jpg" alt="المثقفون المغالطون" class="book-image">
+                <h3>المثقفون المغالطون</h3>
+                <span class="author">بسكال بونيفاس</span>
+                <p class="description">دراسة نقدية عميقة لدور المثقفين في تشكيل الرأي العام، تبحث في مسؤولياتهم الأخلاقية وتأثيرهم في الخطاب المجتمعي.</p>
+                <a href="books/الكتب الفكرية والفلسفية/المثقفون المغالطون/المثقفون_المغالطون_,_الأنتصار_الأعلامي_لخبراء_الكذب_بسكال_بونيفاس.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/البديع في اخبار الاشراف البديعيين/البديع في اخبار الاشراف البديعيين.jpg" alt="البديع في اخبار الاشراف البديعيين" class="book-image">
+                <h3>البديع في اخبار الاشراف البديعيين</h3>
+                <span class="author">إبراهيم بن منصور</span>
+                <p class="description">عمل توثيقي وأدبي رفيع المستوى، يسلط الضوء على تاريخ عائلة علمية وأدبية كان لها تأثير كبير في المشهد الثقافي.</p>
+                <a href="books/الكتب الفكرية والفلسفية/البديع في اخبار الاشراف البديعيين/البديع_في_أخبار_الأشراف_النعميين_،_آل_عيشان_،_أحفاد_الشفيع.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/التفيكر بالنظرية ام التفكير بالنموذج/التفيكر بالنظرية ام التفكير بالنموذج.jpg" alt="التفيكر بالنظرية ام التفكير بالنموذج" class="book-image">
+                <h3>التفيكر بالنظرية ام التفكير بالنموذج</h3>
+                <span class="author"> نايف بن نهار</span>
+                <p class="description">كتاب فكري يتناول الفرق بين التفكير بالنظرية والتفكير بالنموذج، من خلال مساءلة موقع النظرية في عملية التحليل المعرفي. يناقش الكتاب منهجيات التفكير في العلوم الإنسانية والاجتماعية، ويطرح تساؤلات نقدية حول أدوات الفهم والتحليل في العالم المعاصر.</p>
+                <a href="books/الكتب الفكرية والفلسفية/التفيكر بالنظرية ام التفكير بالنموذج/التفكير_بالنظرية_أم_التفكير_بالنموذج؟_مساءلة_تموضع_النظرية_في_التحليل.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/خواطر/خواطر.jpg" alt="خواطر" class="book-image">
+                <h3>خواطر</h3>
+                <span class="author">باسكال</span>
+                <p class="description">مجموعة من التأملات الفلسفية العميقة التي تبحث في طبيعة الإنسان ومكانته في الكون، وتقدم رؤى ثرية عن الحياة والإيمان.</p>
+                <a href="books/الكتب الفكرية والفلسفية/خواطر/خواطر - بسكال.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/مصر في العصر البيزنطي/مصر في العصر البيزنطي.jpg" alt="مصر في العصر البيزنطي" class="book-image">
+                <h3>مصر في العصر البيزنطي</h3>
+                <span class="author">رأفت عبد الحميد</span>
+                <p class="description">دراسة تاريخية أدبية متعمقة تبحث في تأثير الحقبة البيزنطية على الثقافة المصرية وتطور الفكر والأدب خلال هذه الفترة.</p>
+                <a href="books/الكتب الفكرية والفلسفية/مصر في العصر البيزنطي/رأفت_عبد_الحميد_طار_منصور،_مصر_في_العصر_البيزنطي_284_641م♦.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/رجال العراق والاحتلال البريطاني/رجال العراق والاحتلال البريطاني.jpg" alt="رجال العراق والاحتلال البريطاني" class="book-image">
+                <h3>رجال العراق والاحتلال البريطاني</h3>
+                <span class="author">سعيد رشيد</span>
+                <p class="description">تحليل أدبي وتاريخي لدور الشخصيات العراقية المؤثرة خلال فترة الاحتلال البريطاني، يبحث في تشكيل الهوية الوطنية.</p>
+                <a href="books/الكتب الفكرية والفلسفية/رجال العراق والاحتلال البريطاني/رجال_العراق_والاحتلال_البريطاني_سعيد_رشيد_مجيد_زميزم_1990م (1).pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/خمسه اعوام في الدولة العثمانية/خمسه اعوام في الدولة العثمانية.jpg" alt="خمسه اعوام في الدولة العثمانية" class="book-image">
+                <h3>خمسه اعوام في الدولة العثمانية</h3>
+                <span class="author">فتحي حسن</span>
+                <p class="description">سرد أدبي رفيع لتجربة شخصية في رحاب الدولة العثمانية، يقدم رؤية نقدية ثرية للحضارة العثمانية وتأثيرها الثقافي.</p>
+                <a href="books/الكتب الفكرية والفلسفية/خمسه اعوام في الدولة العثمانية/خمسة أعوام في الدولة العثمانية.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/الصعاليك في العصر الجاهلي/الصعاليك في العصر الجاهلي.jpg" alt="الصعاليك في العصر الجاهلي" class="book-image">
+                <h3>الصعاليك في العصر الجاهلي</h3>
+                <span class="author">محمد رضا</span>
+                <p class="description">دراسة أدبية وأنثروبولوجية عميقة لظاهرة الصعاليك في العصر الجاهلي، تبحث في أبعادها الاجتماعية والفكرية وأثرها على الأدب العربي.</p>
+                <a href="books/الكتب الفكرية والفلسفية/الصعاليك في العصر الجاهلي/الصعاليك_في_العصر_الجاهلي_أخبارهم_وأشعارهم_محمد_رضا_مروة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/الكتب الفكرية والفلسفية/الدين والسياسة في التاريخ الاسلامي/الدين والسياسة في التاريخ الاسلامي.jpg" alt="الدين والسياسة في التاريخ الاسلامي" class="book-image">
+                <h3>الدين والسياسة في التاريخ الاسلامي</h3>
+                <span class="author">عبدالرحمن شلقم</span>
+                <p class="description">تحليل فكري عميق للعلاقة بين الدين والسياسة عبر التاريخ الإسلامي، يقدم رؤية نقدية للتجربة الإسلامية في الحكم وإدارة الدولة.</p>
+                <a href="books/الكتب الفكرية والفلسفية/الدين والسياسة في التاريخ الاسلامi/الدين_و_السياسة_في_التاريخ_الإسلامي_عبدالرحمن_شلقم.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+             <div class="book-card">
+                <img src="books/الكتب التاريخيه/حرب الصحراء/حرب الصحراء.jpg" alt="حرب الصحراء" class="book-image">
+                <h3>حرب الصحراء</h3>
+                <span class="author">غلوب باشا</span>
+                <p class="description">مذكرات قائد عسكري بريطاني يروي تجربته في الصحراء العربية، ويكشف عن استراتيجيات المعارك وتفاصيل الصراعات في المنطقة.</p>
+                <a href="books/الكتب التاريخيه/حرب الصحراء/حرب في الصحراء .. مذكرات غلوب باشا.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/تاريخ العرب في جزيرة العرب/تاريخ العرب في جزيرة العرب.jpg" alt="تاريخ العرب في جزيرة العرب" class="book-image">
+                <h3>تاريخ العرب في جزيرة العرب</h3>
+                <span class="author">هويلاند</span>
+                <p class="description">دراسة تاريخية شاملة لتطور الحضارة العربية في شبه الجزيرة العربية، تتبع الجذور العميقة للثقافة والتراث العربي الأصيل.</p>
+                <a href="books/الكتب التاريخيه/تاريخ العرب في جزيرة العرب/تاريخ العرب - هويلاند.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/انتقام الجغرافيا/انتقام الجغرافيا.jpg" alt="انتقام الجغرافيا" class="book-image">
+                <h3>انتقام الجغرافيا</h3>
+                <span class="author">روبرت كابلن</span>
+                <p class="description">تحليل جيوسياسي عميق يبرز كيف تشكل الجغرافيا مصائر الأمم وتؤثر في الصراعات الدولية وتوازن القوى عالمياً.</p>
+                <a href="books/الكتب التاريخيه/انتقام الجغرافيا/انتقام الجغرافيا.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/انبئوني بالرؤيا/انبئوني بالرؤيا.jpg" alt="أنبئوني بالرؤيا" class="book-image">
+                <h3>أنبئوني بالرؤيا</h3>
+                <span class="author">عبدالفتاح كيليطو</span>
+                <p class="description">رواية أدبية تبحث في علاقة الرؤى بالواقع، تقدم تأملات فلسفية حول الأحلام وتفسيرها في الثقافة العربية والإسلامية.</p>
+                <a href="books/الكتب التاريخيه/انبئوني بالرؤيا/أنبئوني_بالرؤيا_رواية_لـ_عبد_الفتاح_كيليطو.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/المكتبة المتنقلة/المكتبة المتنقلة.jpg" alt="المكتبة المتنقلة" class="book-image">
+                <h3>المكتبة المتنقلة</h3>
+                <span class="author">كريستوفر مورلي</span>
+                <p class="description">قصة أدبية عن مكتبة متنقلة تجوب المدن، تروي حكايات القراء والكتب وتأثير المعرفة في تحويل حياة الناس والمجتمعات.</p>
+                <a href="books/الكتب التاريخيه/المكتبة المتنقلة/المكتبة_المتنقلة_،_كريستوفر_مورلي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/النهاية والبداية/النهاية والبداية.jpg" alt="النهاية والبداية" class="book-image">
+                <h3>النهاية والبداية</h3>
+                <span class="author">فيسوافا شيمبورسكا</span>
+                <p class="description">مجموعة شعرية تبحث في دورة الحياة والموت، تقدم تأملات عميقة حول النهايات والبدايات في الوجود الإنساني والفردي.</p>
+                <a href="books/الكتب التاريخيه/النهاية والبداية/البداية_والنهاية_فيسوافا_شيمبورسكا_.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/المماليك/المماليك.jpg" alt="المماليك" class="book-image">
+                <h3>المماليك</h3>
+                <span class="author">جوليان لوازو</span>
+                <p class="description">دراسة تاريخية شاملة لحقبة المماليك من القرن الثالث عشر حتى السادس عشر، تبحث في نظام حكمهم وإنجازاتهم الحضارية.</p>
+                <a href="books/الكتب التاريخيه/المماليك/المماليك_من_القرن_الثالث_عشر_حتى_القرن_السادس_عشر.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/الفتوح العربية الكبرئ/الفتوح العربية الكبرئ.jpg" alt="الفتوح العربية الكبرى" class="book-image">
+                <h3>الفتوح العربية الكبرى</h3>
+                <span class="author">هيو كيندي</span>
+                <p class="description">تحليل تاريخي للفتوحات الإسلامية الكبرى، يبحث في العوامل التي ساعدت على انتشار الإسلام وتأسيس الدولة الإسلامية.</p>
+                <a href="books/الكتب التاريخيه/الفتوح العربية الكبرئ/الفتوح العربية الكبرى.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/الطائف/الطائف.jpg" alt="الطائف" class="book-image">
+                <h3>الطائف</h3>
+                <span class="author">محمد سعيد</span>
+                <p class="description">دراسة تاريخية وجغرافية لمدينة الطائف، تبحث في تطورها العمراني والثقافي ودورها في التاريخ السعودي والحضارة الإسلامية.</p>
+                <a href="books/الكتب التاريخيه/الطائف/الطائف - مصورات العتيبي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/التعليقات والنوادر/التعليقات والنوادر.jpg" alt="التعليقات والنوادر" class="book-image">
+                <h3>التعليقات والنوادر</h3>
+                <span class="author">أبي علي الهجري</span>
+                <p class="description">مجموعة من التعليقات الأدبية والنوادر التاريخية، تقدم نظرة ثرية على الثقافة العربية والأدب في العصر الإسلامي المبكر.</p>
+                <a href="books/الكتب التاريخيه/التعليقات والنوادر/التعليقات_والنوادر_لأبي_علي_الهجري.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/الزنبقة الحمراء/الزنبقة الحمراء.jpg" alt="الزنبقة الحمراء" class="book-image">
+                <h3>الزنبقة الحمراء</h3>
+                <span class="author">أناتول فرانس</span>
+                <p class="description">رواية تاريخية تدور في فرنسا القرن الثامن عشر، تقدم نقداً اجتماعياً وسياسياً من خلال قصة مثيرة وشخصيات عميقة.</p>
+                <a href="books/الكتب التاريخيه/الزنبقة الحمراء/الزنبقة الحمراء - أناتول فرانس.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/البيت الصامت/البيت الصامت.jpg" alt="البيت الصامت" class="book-image">
+                <h3>البيت الصامت</h3>
+                <span class="author">أورهان باموق</span>
+                <p class="description">رواية تركية تبحث في صمت الذاكرة العائلية وأسرار الماضي، تقدم تأملات حول الهوية والانتماء في المجتمع التركي الحديث.</p>
+                <a href="books/الكتب التاريخيه/البيت الصامت/البيت الصامت - اورهان باموق.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/الامير الثائر/photo_5866174652408252295_y.jpg" alt="الأمير الثائر" class="book-image">
+                <h3>الأمير الثائر</h3>
+                <span class="author">علي محمد بن عائض</span>
+                <p class="description">سيرة الأمير الثائر علي بن محمد بن عائض، تروي قصة نضاله وثورته ضد الظلم وتأثيره في التاريخ السياسي لمنطقته.</p>
+                <a href="books/الكتب التاريخيه/الامير الثائر/الأمير_الثائر_علي_بن_محمد_بن_عائض.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/الارض الموعودة/الارض الموعودة.jpg" alt="الأرض الموعودة" class="book-image">
+                <h3>الأرض الموعودة</h3>
+                <span class="author">أوديد أنيون</span>
+                <p class="description">تحليل للخطة الصهيونية منذ الثمانينات، يبحث في التطورات الاستراتيجية والسياسية التي شكلت الصراع في الأرض الموعودة.</p>
+                <a href="books/الكتب التاريخيه/الارض الموعودة/الأرض_الموعودة_خطة_الصهيونية_من_الثمانينات.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/الكتب التاريخيه/ابن خلدون/ابن خلدون.jpg" alt="ابن خلدون" class="book-image">
+                <h3>ابن خلدون</h3>
+                <span class="author">أعلام ومبدعون</span>
+                <p class="description">دراسة عن حياة وإنجازات ابن خلدون، تبرز إسهاماته في علم الاجتماع والتاريخ وفلسفة الحضارة وتأثيره في الفكر العالمي.</p>
+                <a href="books/الكتب التاريخيه/ابن خلدون/ابن خلدون_أعلام ومبدعون.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+            <div class="book-card">
+                <img src="books/الكتب العلمية/تعرف علئ جيرانك/تعرف علئ جيرانك.png" alt="تعرف علئ جيرانك">
+                <h3> تعرف علئ جيرانك</h3>
+                <span class="author"> براندون كايم</span>
+              <p class="description">كتاب علمي واستكشافي يسلّط الضوء على العلاقات بين البشر والكائنات الحية الأخرى التي تعيش بجوارنا، مثل الحيوانات والطيور وحتى الحشرات. يدعو الكاتب إلى إعادة التفكير في مفهوم "الجار" وتوسيع نطاقه ليشمل كل من يشاركنا هذا الكوكب، في إطار علمي وإنساني يجمع بين التأمل والمعرفة.</p>
+                <a href="books/الكتب العلمية/تعرف علئ جيرانك/تعرَّف_على_جيرانك.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/تغير المناخ/تغير المناخ.jpeg" alt="  تغير المناخ">
+                <h3>تغير المناخ </h3>
+                <span class="author">  مارك ماسلين</span>
+                <p class="description">يتناول هذا الكتاب الظواهر المرتبطة بتغير المناخ وتأثيراتها البيئية والاقتصادية والاجتماعية، من خلال تحليل علمي مبسط وشامل. يوضح الكاتب أسباب التغير المناخي وتداعياته على الكوكب، ويقترح حلولاً للتخفيف من آثاره المستقبلية.</p>
+
+                <a href="books/الكتب العلمية/تغير المناخ/تغيُّر_المناخ.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/الكيمياء الفيزيائية/الكيمياء الفيزيائية.jpeg" alt=" الكيمياء الفيزيائية">
+                <h3>الكيمياء الفيزيائية</h3>
+                <span class="author"> بيتر أتكينز</span>
+                <p class="description">مرجع علمي شامل يقدم المفاهيم الأساسية للكيمياء الفيزيائية، مثل الديناميكا الحرارية، التوازن الكيميائي، الحركية الكيميائية، والبنية الجزيئية. يتميز بأسلوب واضح ورسوم توضيحية تدعم الفهم العميق للمبادئ المعقدة، ويُعد مرجعًا أساسيًا لطلبة الكيمياء والعلوم والهندسة.</p>
+
+                <a href="books/الكتب العلمية/الكيمياء الفيزيائية/الكيمياء_الفيزيائية.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم الأحياء التخليقي/علم الأحياء التخليقي.jpeg" alt=" علم الأحياء التخليقي">
+                <h3> علم الأحياء التخليقي</h3>
+                <span class="author"> جيمي إيه ديفيز</span>
+               <p class="description">يقدم هذا الكتاب مدخلاً مبسطًا وشاملًا إلى علم الأحياء التخليقي، وهو فرع حديث من علوم الحياة يدمج بين علم الأحياء والهندسة لإنشاء أنظمة بيولوجية جديدة أو تعديل الكائنات الحية. يناقش المؤلف التطبيقات المستقبلية والتحديات الأخلاقية لهذا المجال سريع التطور.</p>
+
+                <a href="books/الكتب العلمية/علم الأحياء التخليقي/علم_الأحياء_التخليقي.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم الأحياء البحرية/علم الأحياء البحرية.jpeg" alt=" علم الأحياء البحرية">
+                <h3>  علم الأحياء البحرية</h3>
+                <span class="author">  فيليب ملادينوف </span>
+                <p class="description">يستعرض هذا الكتاب عالم الكائنات البحرية وأنظمتها البيئية، ويشرح التنوع البيولوجي في المحيطات والبحار، من الطحالب الدقيقة إلى الثدييات البحرية. يقدم المؤلف شرحًا علميًا مبسطًا مدعومًا بالرسوم التوضيحية لفهم التفاعلات البيئية في البيئات البحرية.</p>
+
+                <a href="books/الكتب العلمية/علم الأحياء البحرية/علم_الأحياء_البحرية.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/الكيمياء الحيوية/الكيمياء الحيوية.jpeg" alt=" الكيمياء الحيوية">
+                <h3> الكيمياء الحيوية</h3>
+                <span class="author"> مارك لورتش</span>
+                <p class="description">يقدّم هذا الكتاب مدخلًا مبسطًا إلى الكيمياء الحيوية، ويشرح كيف تعمل الجزيئات الحيوية مثل البروتينات والإنزيمات والأحماض النووية داخل الخلايا الحية. بأسلوب علمي واضح ومناسب للمبتدئين، يساعد القارئ على فهم العمليات الحيوية الأساسية التي تدعم الحياة.</p>
+
+                <a href="books/الكتب العلمية/الكيمياء الحيوية/الكيمياء_الحيوية.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم الكمبيوتر/download.jpeg" alt="علم الكمبيوتر">
+                <h3>علم الكمبيوتر</h3>
+                <span class="author"> سوبراتا داسجوبتا</span>
+                <p class="description">يشرح هذا الكتاب المبادئ الأساسية لعلم الكمبيوتر بطريقة مبسطة وشاملة، بدءًا من الخوارزميات والمنطق وصولاً إلى بنية الحاسوب والبرمجة. يهدف إلى تعريف القارئ بكيفية تفكير الحاسوب، ويقدم رؤية فكرية وعلمية حول تطور هذا العلم وتأثيره في العالم المعاصر.</p>
+
+                <a href="books/الكتب العلمية/علم الكمبيوتر/علم_الكمبيوتر.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم نظام الأرض/علم نظام الأرض.jpeg" alt=" علم نظام الأرض">
+                <h3> علم نظام الأرض</h3>
+                <span class="author">   تيم لنتون</span>
+               <p class="description">يتناول هذا الكتاب المفاهيم الأساسية في علم نظام الأرض، ويشرح كيفية تفاعل الغلاف الجوي والمحيطات والقشرة الأرضية والكائنات الحية كوحدة واحدة. يقدم المؤلف رؤية علمية لفهم التوازن البيئي والتغيرات المناخية التي تؤثر على مستقبل الكوكب.</p>
+
+                <a href="books/الكتب العلمية/علم نظام الأرض/علم_نظام_الأرض.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم الروبوتات/علم الروبوتات.jpeg" alt="    علم الروبوتات">
+                <h3>    علم الروبوتات</h3>
+                <span class="author"> آلان وينفيلد</span>
+                <p class="description">يستعرض هذا الكتاب المبادئ الأساسية في علم الروبوتات، ويشرح كيفية تصميم الروبوتات وبرمجتها وتشغيلها. يناقش تطورات الذكاء الاصطناعي وتفاعل الإنسان مع الآلة، كما يقدم لمحة عن التطبيقات المستقبلية للروبوتات في مجالات متعددة.</p>
+
+                <a href="books/الكتب العلمية/علم الروبوتات/علم_الروبوتات.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم التشفير/download.jpeg" alt=" علم التشفير">
+                <h3> علم التشفير</h3>
+                <span class="author">  فريد بايبر وشون ميرفي</span>
+              <p class="description">كتاب يشرح أساسيات علم التشفير وتطبيقاته في تأمين المعلومات، ويغطي موضوعات مثل التشفير التقليدي والحديث، خوارزميات التشفير، وبروتوكولات الأمان في الشبكات الرقمية.</p>
+
+                <a href="books/الكتب العلمية/علم التشفير/علم_التشفير.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم الإحصاء/download (1).jpeg" alt="علم الإحصاء ">
+                <h3> علم الإحصاء</h3>
+                <span class="author">  ديفيد جيه هاند</span>
+                <p class="description">كتاب شامل يشرح مبادئ علم الإحصاء وتطبيقاته، يوضح طرق تحليل البيانات وتفسير النتائج، مع أمثلة من مختلف المجالات العلمية والاجتماعية.</p>
+
+                <a href="books/الكتب العلمية/علم الإحصاء/علم_الإحصاء.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم أدب النفس/download.jpeg" alt="  علم أدب النفس">
+                <h3>  علم أدب النفس</h3>
+                <span class="author"> نقولا حداد</span>
+                <p class="description">دراسة متعمقة تجمع بين علم النفس والأدب، تستعرض تأثير الأدب في فهم النفس البشرية وتعبيرها عن المشاعر والصراعات الداخلية.</p>
+
+                <a href="books/الكتب العلمية/علم أدب النفس/علم_أدب_النفس.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/علم الأوبئة/41724208.svg" alt="  علم الأوبئة">
+                <h3>  علم الأوبئة</h3>
+                <span class="author"> رودولفو ساراتشي</span>
+               <p class="description">دراسة شاملة عن انتشار الأمراض والأوبئة، تشرح أسبابها وآليات انتقالها، وتعرض أساليب الوقاية والسيطرة عليها في المجتمعات المختلفة.</p>
+
+                <a href="books/الكتب العلمية/علم الأوبئة/علم_الأوبئة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/الرياضيات/download.jpeg" alt=" الرياضيات">
+                <h3> الرياضيات</h3>
+                <span class="author"> تيموثي جاورز</span>
+                <p class="description">مقدمة شاملة في مفاهيم الرياضيات الأساسية، تتناول نظريات الأعداد، الجبر، الهندسة، والتفاضل والتكامل، مع تطبيقات عملية في العلوم والهندسة.</p>
+
+                <a href="books/الكتب العلمية/الرياضيات/الرياضيات.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/الفيروسات/الفيروسات.jpeg" alt=" الفيروسات">
+                <h3> الفيروسات</h3>
+                <span class="author">  دوروثي إتش كروفورد</span>
+               <p class="description">دراسة علمية متعمقة حول طبيعة الفيروسات، طرق انتقالها وتأثيرها على الكائنات الحية، مع التركيز على أحدث الأبحاث والتقنيات في مكافحة الفيروسات.</p>
+
+                <a href="books/الكتب العلمية/الفيروسات/الفيروسات.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 16 -->
+            <div class="book-card">
+                <img src="books/الكتب العلمية/فيزياء الجسيمات/download.jpeg" alt="  فيزياء الجسيمات">
+                <h3>  فيزياء الجسيمات</h3>
+                <span class="author">  فرانك كلوس</span>
+               <p class="description">كتاب علمي يشرح مفاهيم فيزياء الجسيمات، طبيعة المكونات الأساسية للمادة والقوى التي تحكم تفاعلاتها، مع تسليط الضوء على أحدث الاكتشافات في المجال.</p>
+
+                <a href="books/الكتب العلمية/فيزياء الجسيمات/فيزياء_الجسيمات.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+            <div class="book-card">
+                <img src="books/الخيال العلمي/الطاعون القرمزي/download (1).jpeg" alt="  الطاعون القرمزي">
+              <h3>الطاعون القرمزي</h3>
+              <span class="author">جاك لندن</span>
+              <p class="description">
+                رواية ديستوبية تدور أحداثها في المستقبل بعد أن قضى وباء قاتل على معظم البشرية. من خلال سرد عجوز ناجٍ، يستعرض جاك لندن كيف انهار المجتمع البشري وتحوّلت الحضارة إلى حالة بدائية. الرواية تعكس نظرة فلسفية عن هشاشة التقدم البشري أمام الكوارث، وتطرح تساؤلات عميقة حول طبيعة الإنسان والحضارة.
+                </p>
+
+                <a href="books/الخيال العلمي/الطاعون القرمزي/الطاعون_القرمزي.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/الزيارة المدهشة/download.jpeg" alt=" الزيارة المدهشة">
+                <h3> الزيارة المدهشة </h3>
+                <span class="author">   هربرت جورج ويلز</span>
+                <p class="description">
+                 خيالية تدور حول ظهور مخلوق غريب قادم من عالم آخر في بلدة إنجليزية صغيرة. عبر هذه "الزيارة المدهشة"، يعرض هربرت جورج ويلز تأملاته الساخرة في المجتمع والسلطة والدين، ويطرح تساؤلات حول تقبّل الآخر والاختلاف. تحمل الرواية طابعًا فكريًا وفلسفيًا مغلفًا بالخيال والسخرية.
+                    </p>
+
+                <a href="books/الخيال العلمي/الزيارة المدهشة/الزيارة_المدهشة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/حربنا مع إمارة موناكو/download.png" alt=" حربنا مع إمارة موناكو">
+                <h3> حربنا مع إمارة موناكو</h3>
+                <span class="author">  حربنا مع إمارة موناكو</span>
+                <p class="description">
+               رواية قصيرة ساخرة تدور حول نزاع خيالي بين دولة كبرى وإمارة موناكو الصغيرة، وتسلّط الضوء على التوترات السياسية والدبلوماسية بأسلوب فكاهي لاذع. يقدم المؤلف نقدًا غير مباشر للسياسات الاستعمارية والصراعات العبثية التي تنشأ لأسباب تافهة، في قالب أدبي ممتع.
+                 </p>
+
+                <a href="books/الخيال العلمي/حربنا مع إمارة موناكو/حربنا_مع_إمارة_موناكو.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/قصة الأيام القادمة/download.jpeg" alt="   قصة الأيام القادمة">
+                <h3>   قصة الأيام القادمة</h3>
+                <span class="author">   هربرت جورج ويلز</span>
+               <p class="description">
+                 رواية خيال علمي تنبؤية تتناول المستقبل البشري في ظل التطور التكنولوجي والصناعي المتسارع. يتخيل ويلز عالماً مستقبلياً يتسم بالتوترات الاجتماعية والاقتصادية، ويطرح تساؤلات عميقة حول طبيعة التقدم وأثره على الإنسان والمجتمع. بأسلوبه الفريد، يقدم رؤية مثيرة لمستقبل قد لا يكون بعيداً.
+                  </p>
+
+                <a href="books/الخيال العلمي/قصة الأيام القادمة/قصة_الأيام_القادمة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/شريد في مملكة السحر/download (1).jpeg" alt="   شريد في مملكة السحر">
+                <h3>  شريد في مملكة السحر</h3>
+                <span class="author">  كوري دوكتورو</span>
+                <p class="description">
+                رواية خيال علمي تدور أحداثها في عالم يجمع بين السحر والتكنولوجيا، حيث يجد البطل نفسه في مملكة تحكمها قوانين غريبة تجمع بين السحر الرقمي والأنظمة التكنولوجية المعقدة. يستعرض كوري دوكتورو من خلال هذه المغامرة رؤيته النقدية للمجتمع، والسلطة، والحرية الرقمية في قالب قصصي مشوق.
+                   </p>
+
+                <a href="books/الخيال العلمي/شريد في مملكة السحر/شريد_في_مملكة_السحر.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/رجل بلا جسد/download.png" alt="  رجل بلا جسد">
+                <h3>  رجل بلا جسد</h3>
+                <span class="author"> إدوارد بيدج ميتشل</span>
+                <p class="description">
+                 قصة خيال علمي كلاسيكية تحكي عن تجربة علمية تؤدي إلى اختفاء جسد أحد الأشخاص بالكامل، مع بقائه على قيد الحياة. تستعرض الرواية الأسئلة الفلسفية والعلمية حول الجسد، الهوية، والوجود، بأسلوب سردي مبتكر سبق زمنه، وتُعد من أوائل القصص التي تناولت مفهوم "الرجل غير المرئي".
+                     </p>
+
+                <a href="books/الخيال العلمي/رجل بلا جسد/رجل_بلا_جسد.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/تجربة الدكتور أوكس/download.jpeg" alt=" تجربة الدكتور أوكس">
+                <h3> تجربة الدكتور أوكس</h3>
+                <span class="author"> جول فيرن</span>
+                <p class="description">
+                رواية خيال علمي قصيرة وساخرة تتناول تجربة يجريها الدكتور أوكس في بلدة هادئة عن طريق ضخ غاز غامض في الجو، مما يؤدي إلى تغييرات جذرية في سلوك السكان. بأسلوب فكاهي ذكي، يستعرض جول فيرن كيف يمكن للعلم أن يؤثر على المجتمعات إذا استُخدم دون ضوابط أخلاقية.
+               </p>
+
+                <a href="books/الخيال العلمي/تجربة الدكتور أوكس/تجربة_الدكتور_أوكس.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/تحوُّل/download (1).jpeg" alt="   تحوُّل">
+                <h3> تحوُّل</h3>
+                <span class="author">   ماري شيلي</span>
+               <p class="description">
+                قصة قصيرة غامضة تدور حول بحّار متهور يعقد صفقة مشؤومة مع كائن غريب، مقابل الثروة. يستيقظ ليجد نفسه قد خسر أكثر مما توقّع، بما في ذلك هويته. بأسلوبها الكلاسيكي، تسلط ماري شيلي الضوء على الطمع البشري والعواقب المخيفة للقرارات المتهورة.
+                  </p>
+
+                <a href="books/الخيال العلمي/تحوُّل/تحوُّل.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/تجربة جامعة كاينبلاتس الكبرى/download.jpeg" alt="     تجربة جامعة كاينبلاتس الكبرى">
+                <h3>    تجربة جامعة كاينبلاتس الكبرى</h3>
+                <span class="author"> آرثر كونان دويل</span>
+               <p class="description">
+                 يدية تُجرى في جامعة كاينبلاتس، وتؤدي إلى نتائج غريبة تثير الجدل بين العلماء والطلاب. بأسلوبه الساخر، يقدّم دويل نقدًا لطموحات العلم غير المقيدة والغرور الأكاديمي.
+                   </p>
+                <a href="books/الخيال العلمي/تجربة جامعة كاينبلاتس الكبرى/تجربة_جامعة_كاينبلاتس_الكبرى.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/لاسلكيًّا/13153615.svg" alt=" لاسلكيًّا">
+                <h3> لاسلكيًّا</h3>
+                <span class="author">  روديارد كبلينج</span>
+              <p class="description">
+                قصة قصيرة تأملية تدور حول تجربة غريبة لرجل يلتقط، عبر جهاز لاسلكي بدائي، ترددات يبدو أنها تعود إلى شاعر من الماضي. يستكشف كبلينج في هذه القصة الغامضة العلاقة بين التكنولوجيا والوعي، والتواصل العابر للزمن بأسلوب شاعري وفلسفي.
+                </p>
+
+                <a href="books/الخيال العلمي/لاسلكيًّا/لاسلكيًّا.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/الأرض المسطحة/download.jpeg" alt="الأرض المسطحة">
+                <h3> الأرض المسطحة</h3>
+                <span class="author">  إدوين إبوت</span>
+                <p class="description">
+                رواية خيال علمي وفلسفية تدور أحداثها في عالم ثنائي الأبعاد، حيث يقدّم الكاتب نقدًا ساخرًا للمجتمع الفيكتوري عبر قصة رمزية عن الإدراك والسلطة والمعرفة. يطرح الكتاب تساؤلات عميقة حول حدود الفهم البشري وإمكانيات العوالم الأخرى، ويُعد من الكلاسيكيات التي ألهمت مفاهيم علمية لاحقة عن الأبعاد.
+                </p>
+
+                <a href="books/الخيال العلمي/الأرض المسطحة/الأرض_المسطحة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/الأخ الأصغر/download (1).jpeg" alt="    الأخ الأصغر">
+                <h3>  الأخ الأصغر</h3>
+                <span class="author"> كوري دوكتورو</span>
+                <p class="description">
+               رواية خيال علمي معاصرة تتناول قضايا الحرية الشخصية والرقابة الحكومية في عالم تسيطر عليه التكنولوجيا. تدور القصة حول مراهق يُدعى ماركوس، يُصبح هدفًا للسلطات بعد هجوم إرهابي، ويستخدم مهاراته التقنية لمحاربة القمع الرقمي. يقدم الكتاب رؤية نقدية للواقع الأمني والرقمي في المجتمعات الحديثة، بأسلوب مشوّق وتحريضي.
+                    </p>
+
+                <a href="books/الخيال العلمي/الأخ الأصغر/الأخ_الأصغر.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/الخروج دون حفظ/download.jpeg" alt="   الخروج دون حفظ">
+                <h3>  الخروج دون حفظ</h3>
+                <span class="author"> روث نستفولد</span>
+               <p class="description">
+                قصة خيال علمي قصيرة تدور في عالم افتراضي متقدم، حيث تتقاطع حدود الذكاء الاصطناعي مع الهوية البشرية. تتناول القصة أسئلة فلسفية حول الوعي، الحرية، والاختيار في زمن تحكمه البرامج والواقع الرقمي. بأسلوب مشوّق وتأملي، تطرح الكاتبة رؤية مستقبلية لعلاقة الإنسان بالتكنولوجيا.
+               </p>
+
+                <a href="books/الخيال العلمي/الخروج دون حفظ/الخروج_دون_حفظ.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/آلة الزمن/download (1).jpeg" alt=" آلة الزمن">
+                <h3> آلة الزمن</h3>
+                <span class="author"> هربرت جورج ويلز</span>
+                <p class="description">
+                  رواية خيال علمي كلاسيكية تدور حول عالم يبتكر آلة تمكنه من السفر عبر الزمن. من خلال رحلته إلى المستقبل البعيد، يكتشف تحولات مدهشة في الحضارة البشرية. يناقش الكتاب قضايا اجتماعية وفلسفية عميقة، مثل الصراع الطبقي والمصير الإنساني، بأسلوب مشوق ومليء بالخيال.
+                  </p>
+                <a href="books/الخيال العلمي/آلة الزمن/آلة_الزمن.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/الكشف عن راما/download.jpeg" alt=" الكشف عن راما">
+                <h3> الكشف عن راما</h3>
+                <span class="author">  جنتري لي وآرثر كلارك</span>
+                <p class="description">
+                   رواية خيال علمي مثيرة تبدأ باكتشاف جسم أسطواني ضخم يقترب من النظام الشمسي، يُطلق عليه اسم "راما". يرسل العلماء بعثة فضائية لاستكشاف هذا الكائن الغامض، ليجدوا أنه ليس مجرد صخرة فضائية، بل سفينة فضائية متقدمة بتكنولوجيا لا تشبه شيئًا عرفه البشر من قبل. تطرح الرواية أسئلة فلسفية حول الحياة خارج الأرض ومستقبل البشرية.
+                           </p>
+                <a href="books/الخيال العلمي/الكشف عن راما/الكشف_عن_راما.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 16 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/حرب العوالم/download (1).jpeg" alt="   حرب العوالم">
+                <h3>  حرب العوالم</h3>
+                <span class="author">  هربرت جورج ويلز</span>
+                <p class="description">
+                 رواية خيال علمي كلاسيكية تحكي قصة غزو فضائي من كوكب المريخ يهدد البشرية بالانقراض. يصف هربرت جورج ويلز المواجهة المروعة بين البشر والمخلوقات الفضائية التي تفوقهم في التكنولوجيا والوحشية. تحمل الرواية تأملات عميقة في الغرور البشري والهشاشة الحضارية أمام قوى أعظم.
+                  </p>
+                <a href="books/الخيال العلمي/حرب العوالم/حرب_العوالم.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/الخوف يطارد القرية/download (1).jpeg" alt="   الخوف يطارد القرية">
+              <h3> الخوف يطارد القرية</h3>
+              <span class="author"> إثيل لينا وايت</span>
+              <p class="description">
+               رواية غموض وإثارة تدور أحداثها في قرية إنجليزية صغيرة يخيّم عليها جو من الخوف والريبة. من خلال شخصياتها المعقدة وأحداثها المشوقة، تكشف الكاتبة عن تأثير الخوف الجماعي على المجتمع وكيف يمكن أن يغيّر مصائر الأفراد.
+               </p>
+
+                <a href="books/قسم القصص البوليسيىة/الخوف يطارد القرية/الخوف_يطارد_القرية.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/قضية فندق سميراميس/download.jpeg" alt="  قضية فندق سميراميس">
+                <h3> قضية فندق سميراميس</h3>
+                <span class="author">     إيه إي دبليو ماسون</span>
+                <p class="description">
+                  رواية بوليسية كلاسيكية تدور حول جريمة غامضة تقع في فندق سميراميس الشهير. ينسج الكاتب حبكة مشوقة مليئة بالتفاصيل والتحقيقات التي تكشف أسرار الشخصيات واحدًا تلو الآخر، مما يجعل القارئ يعيش أجواء الإثارة والتشويق حتى اللحظة الأخيرة.
+                  </p>
+
+                <a href="books/قسم القصص البوليسيىة/قضية فندق سميراميس/قضية_فندق_سميراميس.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/الرهائن الثلاث/download.png" alt=" الرهائن الثلاث   ">
+                <h3> الرهائن الثلاث</h3>
+                <span class="author">  جون بوكان</span>
+               <p class="description">
+                  رواية مغامرات وتشويق من سلسلة ريتشارد هاناي، تدور حول اختطاف ثلاثة أشخاص مهمين، ويُكلَّف البطل بمهمة إنقاذهم. تجمع الرواية بين الغموض السياسي والإثارة، وتعكس أجواء ما بعد الحرب العالمية الأولى حيث تتشابك المؤامرات الدولية مع المغامرات الفردية.
+                  </p>
+
+                <a href="books/قسم القصص البوليسيىة/الرهائن الثلاث/الرهائن_الثلاث.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/لغز المنزل ٣١ نيو إن/download.jpeg" alt="     لغز المنزل ٣١ نيو إن">
+                <h3>  لغز المنزل ٣١ نيو إن</h3>
+                <span class="author">  آر أوستن فريمان</span>
+                 <p class="description">
+                    رواية بوليسية مشوّقة من سلسلة المحقق الدكتور ثورندايك، تدور حول جريمة غامضة وقعت في منزل رقم ٣١ بشارع نيو إن. يستخدم المحقق أساليبه العلمية الدقيقة وتحليلاته المنهجية لكشف ملابسات القضية. تعد الرواية مثالاً مبكراً على توظيف العلم والمنطق في الأدب البوليسي.
+                  </p>
+
+                <a href="books/قسم القصص البوليسيىة/لغز المنزل ٣١ نيو إن/لغز_المنزل_٣١_نيو_إن.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/عدالة الآنسة بيم/download (1).jpeg" alt="      عدالة الآنسة بيم">
+                <h3>  عدالة الآنسة بيم</h3>
+                <span class="author">  جوزفين تاي</span>
+                <p class="description">
+                   رواية بوليسية نفسية تدور أحداثها في كلية لتدريب المعلمات، حيث تُدعى الآنسة بيم لإلقاء محاضرة. تنقلب الأجواء الهادئة عندما تقع حادثة غامضة تدفع البطلة للتساؤل عما إذا كانت جريمة قد ارتكبت. بأسلوبها الدقيق، تمزج جوزفين تاي بين تحليل الشخصيات والجو المشوّق لتقديم واحدة من أبرز رواياتها.
+                    </p>
+
+                <a href="books/قسم القصص البوليسيىة/عدالة الآنسة بيم/عدالة_الآنسة_بيم.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/خطوة في الظلام/download.jpeg" alt=" خطوة في الظلام">
+                <h3>  خطوة في الظلام</h3>
+                <span class="author"> إثيل لينا وايت</span>
+                <p class="description">
+                 أجواء مليئة بالريبة والخطر. بأسلوب مشوّق، تنسج إثيل لينا وايت قصة عن الخوف، الشك، والعلاقات الإنسانية المظلمة، مما يجعل القارئ في حالة ترقّب مستمرة حتى النهاية.
+                  </p>
+
+                <a href="books/قسم القصص البوليسيىة/خطوة في الظلام/خطوة_في_الظلام.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/ثماني جرائم كاملة/download.png" alt="   ثماني جرائم كاملة">
+                <h3> ثماني جرائم كاملة</h3>
+                <span class="author"> بيتر سوانسون</span>
+                <p class="description">
+               رواية جريمة وتشويق معاصرة تبدأ حين ينشر صاحب مكتبة مدونة عن أشهر ثماني جرائم مثالية في الأدب البوليسي. بشكل غامض، يبدأ قاتل مجهول بتنفيذ جرائم حقيقية تستند إلى تلك القائمة، مما يضع البطل في قلب لعبة خطيرة حيث يصبح الأدب مرآة للواقع.
+                </p>
+
+                <a href="books/قسم القصص البوليسيىة/ثماني جرائم كاملة/ثماني_جرائم_كاملة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/اللعبة القاتلة/download.jpeg" alt="   اللعبة القاتلة">
+                <h3> اللعبة القاتلة</h3>
+                <span class="author">    محمود سالم</span>
+               <p class="description">
+              رواية بوليسية من سلسلة "المغامرون الخمسة"، حيث يجد الأصدقاء أنفسهم في مواجهة لغز جديد مليء بالمخاطر أثناء محاولتهم كشف حقيقة "اللعبة القاتلة". بأسلوب شيّق وسرد سريع الإيقاع، يقدّم محمود سالم مغامرة تجمع بين الذكاء، الشجاعة، وروح الفريق.
+                 </p>
+
+                <a href="books/قسم القصص البوليسيىة/اللعبة القاتلة/اللعبة_القاتلة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/رجال العدالة الثلاثة/download (1).jpeg" alt="  رجال العدالة الثلاثة">
+                <h3>   رجال العدالة الثلاثة</h3>
+                <span class="author"> إدجار والاس</span>
+                 <p class="description">
+                   رواية جريمة وإثارة تدور حول ثلاثة رجال يقررون تطبيق العدالة بطريقتهم الخاصة خارج حدود القانون. يتعقبون المجرمين والخونة ويعاقبونهم بوسائل سرية لا تستطيع السلطات الوصول إليها. بأسلوب مشوّق وسرد سريع، يقدم إدجار والاس واحدة من أبرز رواياته البوليسية الكلاسيكية.
+                   </p>
+                <a href="books/قسم القصص البوليسيىة/رجال العدالة الثلاثة/رجال_العدالة_الثلاثة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/ابنة الزمن/download.jpeg" alt=" ابنة الزمن">
+                <h3> ابنة الزمن</h3>
+                <span class="author">  جوزفين تاي</span>
+              <p class="description">
+              رواية بوليسية تاريخية تعتبر من أبرز أعمال جوزفين تاي، حيث يرقد المفتش آلان غرانت في المستشفى ويقضي وقته في التحقيق بتاريخ الملك ريتشارد الثالث. عبر البحث في الوثائق والشخصيات التاريخية، يعيد النظر في واحدة من أكثر القضايا إثارة للجدل في التاريخ الإنجليزي، ويطرح تساؤلات عميقة حول الحقيقة والعدالة.
+                  </p>
+
+                <a href="books/قسم القصص البوليسيىة/ابنة الزمن/ابنة_الزمن.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/الرمال المُغنية/download (1).jpeg" alt=" الرمال المُغنية">
+                <h3> الرمال المُغنية</h3>
+                <span class="author">  جوزفين تاي</span>
+               <p class="description">
+               رواية بوليسية من سلسلة المفتش آلان غرانت، تبدأ عندما يُعثر على جثة رجل في قطار ليلي، وبحوزته قصاصة ورق تحمل لغزًا غامضًا عن "الرمال المُغنية". ينطلق غرانت، رغم معاناته من إرهاق نفسي، في رحلة لكشف حقيقة الجريمة التي تقوده إلى اسكتلندا والصحراء العربية. تجمع الرواية بين الغموض والتأمل في الطبيعة الإنسانية.
+                </p>
+                <a href="books/قسم القصص البوليسيىة/الرمال المُغنية/الرمال_المُغنية.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/لغز جرس التصويت/download.jpeg" alt="  لغز جرس التصويت">
+                <h3>  لغز جرس التصويت</h3>
+                <span class="author"> إلين ويلكنسون</span>
+                <p class="description">
+               رواية بوليسية كلاسيكية تدور أحداثها في مجلس العموم البريطاني، حيث يُعثر على رجل أعمال ثري مقتولًا في قاعة البرلمان. يتولى سكرتير أحد الوزراء التحقيق في القضية، لتنكشف أسرار تتعلق بالسياسة والمصالح الخاصة. بأسلوب مشوّق، تمزج إلين ويلكنسون بين الإثارة البوليسية وأجواء الحياة السياسية في بريطانيا بين الحربين.
+                 </p>
+
+                <a href="books/قسم القصص البوليسيىة/لغز جرس التصويت/لغز_جرس_التصويت.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/قضية منزل فرنتشايز/download (1).jpeg" alt="قضية منزل فرنتشايز">
+                <h3>  قضية منزل فرنتشايز</h3>
+                <span class="author"> جوزفين تاي</span>
+               <p class="description">
+                   رواية بوليسية من سلسلة المفتش آلان غرانت، تبدأ بالعثور على جثة ممثلة شهيرة على الشاطئ. في البداية يُظن أن موتها كان حادث غرق، لكن التحقيق يكشف خيوطًا معقدة تتعلق بالشهرة والعلاقات والغيرة. بأسلوبها المميز، تمزج جوزفين تاي بين الغموض وتحليل النفس البشرية في واحدة من أجمل رواياتها البوليسية.
+                  </p>
+                <a href="books/قسم القصص البوليسيىة/قضية منزل فرنتشايز/قضية_منزل_فرنتشايز.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/الخيال العلمي/آلة الزمن/download (1).jpeg" alt=" آلة الزمن">
+                <h3> آلة الزمن</h3>
+                <span class="author"> هربرت جورج ويلز</span>
+                <p class="description">
+                  رواية خيال علمي كلاسيكية تدور حول عالم يبتكر آلة تمكنه من السفر عبر الزمن. من خلال رحلته إلى المستقبل البعيد، يكتشف تحولات مدهشة في الحضارة البشرية. يناقش الكتاب قضايا اجتماعية وفلسفية عميقة، مثل الصراع الطبقي والمصير الإنساني، بأسلوب مشوق ومليء بالخيال.
+                  </p>
+                <a href="books/الخيال العلمي/آلة الزمن/آلة_الزمن.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/صرخة في سوهو/download.png" alt=" صرخة في سوهو">
+                <h3> صرخة في سوهو</h3>
+                <span class="author"> جون جي براندن</span>
+                <p class="description">
+               رواية جريمة وتشويق تدور أحداثها في حي سوهو اللندني خلال الحرب العالمية الثانية. تتبع القصة المفتش باتريك ألويسيوس ماكغراث وهو يواجه سلسلة من الجرائم المعقدة والمؤامرات التي تتشابك مع أجواء الجاسوسية والخطر في زمن الحرب. تجمع الرواية بين الغموض البوليسي والإثارة التاريخية.
+                 </p>
+                <a href="books/قسم القصص البوليسيىة/صرخة في سوهو/صرخة_في_سوهو.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 16 -->
+            <div class="book-card">
+                <img src="books/قسم القصص البوليسيىة/جريمتا واجهة العرض/download (1).png" alt="    جريمتا واجهة العرض">
+                <h3>  جريمتا واجهة العرض</h3>
+                <span class="author">  جون هازليت فاهي</span>
+                <p class="description">
+                 رواية بوليسية مثيرة تدور حول جريمتين غامضتين تقعان في واجهة عرض أحد المتاجر الكبرى. مع تقدم التحقيق، تتكشف شبكة من الأسرار والدوافع الخفية التي تقود إلى حل غير متوقع. بأسلوب مشوّق وسرد متماسك، يقدم جون هازليت فاهي عملاً يعبّر عن روح الأدب البوليسي الكلاسيكي.
+                   </p>
+                <a href="books/قسم القصص البوليسيىة/جريمتا واجهة العرض/جريمتا_واجهة_العرض.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+             <div class="book-card">
+                <img src="books/من تراثنا العربي/رسائل الجاحظ/download.jpeg" alt="  رسائل الجاحظ">
+              <h3>   رسائل الجاحظ</h3>
+              <span class="author"> الجاحظ</span>
+              <p class="description">
+                مجموعة من الرسائل الأدبية والفكرية التي كتبها الجاحظ، يعرض فيها أسلوبه الساخر وذكاءه اللغوي في معالجة قضايا اجتماعية وثقافية وفلسفية. تُعد هذه الرسائل من أروع ما تركه الجاحظ من تراث أدبي يبرز مكانته كأحد أعلام النثر العربي.
+                </p>
+                <a href="books/من تراثنا العربي/رسائل الجاحظ/رسائل_الجاحظ.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/البيان والتبيين/download.png" alt="    البيان والتبيين">
+                <h3>البيان والتبيين</h3>
+                <span class="author">   الجاحظ</span>
+                <p class="description">
+               يُعد "البيان والتبيين" من أهم كتب الجاحظ وأكثرها تأثيرًا في التراث العربي. يتناول فيه قضايا البلاغة والفصاحة وأساليب البيان، مع شواهد من الشعر والخطابة والأمثال. الكتاب ليس مجرد دراسة لغوية، بل موسوعة أدبية وفكرية تعكس عمق الثقافة العربية في عصرها.
+                </p>
+
+                <a href="books/من تراثنا العربي/البيان والتبيين/البيان_والتبيين.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/الحنين إلى الأوطان/download.jpeg" alt=" الحنين إلى الأوطان">
+                <h3>  الحنين إلى الأوطان</h3>
+                <span class="author"> الجاحظ</span>
+                <p class="description">
+                 رسالة أدبية ممتعة من رسائل الجاحظ، يتناول فيها موضوع الغربة والاشتياق إلى الأوطان بأسلوبه الساخر والعميق في آن واحد. يعرض مشاعر المغتربين وتجاربهم، ويمزج بين الحكمة والطرافة في تصوير أثر الوطن على النفوس.
+                </p>
+
+                <a href="books/من تراثنا العربي/الحنين إلى الأوطان/الحنين_إلى_الأوطان.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/أخبار الحمقى والمغفلين/download.png" alt="  أخبار الحمقى والمغفلين">
+                <h3> أخبار الحمقى والمغفلين</h3>
+                <span class="author">  أبو الفرج بن الجوزي</span>
+                 <p class="description">
+                    كتاب أدبي طريف يجمع فيه ابن الجوزي أخبارًا وحكايات عن الحمقى والمغفلين من مختلف العصور. بأسلوب يجمع بين السخرية والعظة، يعرض صورًا إنسانية مليئة بالغرابة والمرح، ليقدم للقارئ مزيجًا من التسلية والفائدة.
+                    </p>
+
+                <a href="books/من تراثنا العربي/أخبار الحمقى والمغفلين/أخبار_الحمقى_والمغفلين.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/رحلة ابن بطوطة/download.jpeg" alt="  رحلة ابن بطوطة">
+                <h3> رحلة ابن بطوطة</h3>
+                <span class="author">محمد بن عبد الله ابن بطوطة وابن جزي الكلبي</span>
+                <p class="description">
+               من أعظم كتب أدب الرحلات في التراث العربي والإسلامي. يصف ابن بطوطة أسفاره التي امتدت لأكثر من ثلاثين عامًا، جاب فيها بلاد المغرب والأندلس ومصر والشام والحجاز والعراق والهند والصين وأفريقيا. يجمع الكتاب بين الوصف الجغرافي والاجتماعي والثقافي، مما يجعله مصدرًا تاريخيًا وأدبيًا فريدًا.
+                  </p>
+
+                <a href="books/من تراثنا العربي/رحلة ابن بطوطة/رحلة_ابن_بطوطة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/التربيع والتدوير/download (1).png" alt=" التربيع والتدوير">
+                <h3>  التربيع والتدوير</h3>
+                <span class="author"> الجاحظ</span>
+               <p class="description">
+               كتاب أدبي ساخر يُظهر براعة الجاحظ في فنون البيان والجدل. كتبه في سياق مناظرة أدبية، حيث استخدم الأسلوب البلاغي والفكاهي للتفنن في السرد والوصف. يعكس الكتاب قدرة الجاحظ على المزج بين الطرافة والعمق الفكري، ويُعد نموذجًا على أسلوبه الفريد في الكتابة.
+                </p>
+
+                <a href="books/من تراثنا العربي/التربيع والتدوير/التربيع_والتدوير.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/الإمتاع والمؤانسة/download.jpeg" alt="    الإمتاع والمؤانسة">
+                <h3>الإمتاع والمؤانسة</h3>
+                <span class="author"> أبو حيان التوحيدي</span>
+               <p class="description">
+                كتاب أدبي وفكري يجمع محاورات أبي حيّان التوحيدي مع الوزير أبي عبد الله العارض، حيث تناول فيه قضايا فلسفية وأدبية واجتماعية بأسلوب شيق وعميق. يُبرز الكتاب سعة اطلاع التوحيدي وثقافته الواسعة، ويُعد من أهم المصادر التي تعكس روح الفكر والأدب في القرن الرابع الهجري.
+                 </p>
+
+                <a href="books//من تراثنا العربي/الإمتاع والمؤانسة/الإمتاع_والمؤانسة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/رسالة في ماهية العشق/download (1).jpeg" alt="    رسالة في ماهية العشق">
+                <h3>رسالة في ماهية العشق</h3>
+                <span class="author">  ابن سينا</span>
+               <p class="description">
+                رسالة فلسفية تتناول مفهوم العشق عند ابن سينا، حيث يبحث في حقيقته، أنواعه، وأثره في النفس الإنسانية. يوضح كيف يرتبط العشق بالروح والعقل والجسد، ويرى فيه قوة دافعة نحو الكمال والارتقاء. تُعد هذه الرسالة من النصوص الفلسفية البارزة في التراث الإسلامي التي تمزج بين العقلانية والتأمل الروحي.
+               </p>
+
+                <a href="books/من تراثنا العربي/رسالة في ماهية العشق/رسالة_في_ماهية_العشق.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/رسالة الملائكة/download.jpeg" alt=" رسالة الملائكة">
+                <h3>  رسالة الملائكة</h3>
+                <span class="author"> أبو العلاء المعري</span>
+                <p class="description">
+                 مؤلَّف أدبي وفلسفي يستخدم فيه أبو العلاء المعري لغة رمزية وتأملية لطرح أفكاره حول قضايا الإنسان والوجود والدين. تعكس الرسالة عمق نظرته النقدية وفلسفته التشاؤمية التي ميّزت نتاجه الأدبي، وتُعد نموذجًا على مزج الأدب بالحكمة في التراث العربي.
+                   </p>
+                <a href="books/من تراثنا العربي/رسالة الملائكة/رسالة_الملائكة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/منطق المشرقيين والقصيدة المزدوجة في المنطق/download (1).jpeg" alt="  منطق المشرقيين والقصيدة المزدوجة في المنطق">
+                <h3> منطق المشرقيين والقصيدة المزدوجة في المنطق</h3>
+                <span class="author">   ابن سينا </span>
+              <p class="description">
+                 رواية بوليسية تاريخية تعتبر من أبرز أعمال جوزفين تاي، حيث يرقد المفتش آلان غرانت في المستشفى ويقضي وقته في التحقيق بتاريخ الملك ريتشارد الثالث. عبر البحث في الوثائق والشخصيات التاريخية، يعيد النظر في واحدة من أكثر القضايا إثارة للجدل في التاريخ الإنجليزي، ويطرح تساؤلات عميقة حول الحقيقة والعدالة.
+                </p>
+                <a href="books/من تراثنا العربي/منطق المشرقيين والقصيدة المزدوجة في المنطق/منطق_المشرقيين_والقصيدة_المزدوجة_في_المنطق.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/رسائل إخوان الصفاء وخِلَّان الوفاء/download.png" alt="  رسائل إخوان الصفاء وخِلَّان الوفاء (الجزء الأول)">
+                <h3> رسائل إخوان الصفاء وخِلَّان الوفاء (الجزء الأول)</h3>
+                <span class="author"> إخوان الصفا</span>
+               <p class="description">
+                  موسوعة فكرية وفلسفية شاملة ألّفها إخوان الصفا في القرن الرابع الهجري، تضم مقالات في الرياضيات، الفلك، الموسيقى، الفلسفة، السياسة، والأخلاق. تُعد من أوسع المحاولات الموسوعية في التراث العربي الإسلامي، وتهدف إلى الجمع بين الحكمة الدينية والفلسفة العقلية.
+                  </p>
+                <a href="books/من تراثنا العربي/رسائل إخوان الصفاء وخِلَّان الوفاء/رسائل_إخوان_الصفاء_وخِلَّان_الوفاء_(الجزء_الأول).pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/آراء أهل المدينة الفاضلة ومضاداتها/download.png" alt=" آراء أهل المدينة الفاضلة ومضاداتها">
+                <h3>  آراء أهل المدينة الفاضلة ومضاداتها</h3>
+                <span class="author"> أبو نصر محمد الفارابي</span>
+                <p class="description">
+                 مؤلف فلسفي كلاسيكي للفيلسوف الفارابي، يتناول فيه تصوره للمدينة الفاضلة التي تقوم على العدل والحكمة، ويقارنها بالمدن الفاسدة ومضاداتها. يُعد الكتاب من أبرز النصوص في الفلسفة السياسية الإسلامية، ويكشف عن رؤية شمولية للإنسان والمجتمع المثالي.
+                   </p>
+
+                <a href="books/من تراثنا العربي/آراء أهل المدينة الفاضلة ومضاداتها/آراء_أهل_المدينة_الفاضلة_ومضاداتها.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/الأدب الكبير/download (1).png" alt="  الأدب الكبير">
+                <h3>  الأدب الكبير</h3>
+                <span class="author"> عبد الله بن المقفع</span>
+               <p class="description">
+                 مؤلف تراثي في الحكمة والأدب، يتناول فيه ابن المقفع أسس السلوك القويم وأخلاقيات التعامل بين الحاكم والمحكوم، وبين الناس بعضهم مع بعض. يُبرز الكتاب مكانة ابن المقفع كأديب ومفكر، ويُعد من أهم الأعمال التي أرست قواعد الأدب السياسي والاجتماعي في الثقافة العربية.
+                 </p>
+                <a href="books/من تراثنا العربي/الأدب الكبير/الأدب_الكبير.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/كليلة ودِمنة/download.jpeg" alt="  كليلة ودِمنة">
+                <h3> كليلة ودِمنة</h3>
+                <span class="author"> عبد الله بن المقفع</span>
+               <p class="description">
+                من أعظم كتب التراث العربي، يضم مجموعة من الحكايات الرمزية التي تُروى على ألسنة الحيوانات، هدفها تقديم الحكم والعبر في السياسة والأخلاق والحياة الاجتماعية. نقل ابن المقفع الكتاب إلى العربية بأسلوب بليغ، فصار واحدًا من أمهات كتب الأدب والحكمة في الثقافة الإسلامية.
+                </p>
+                <a href="books/من تراثنا العربي/كليلة ودِمنة/كليلة_ودِمنة.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="books/من تراثنا العربي/رسالة الغفران/download (1).jpeg" alt=" رسالة الغفران">
+                <h3>رسالة الغفران</h3>
+                <span class="author">أبو العلاء المعري</span>
+                <p class="description">
+                   من أبرز مؤلفات أبي العلاء المعري، وهي رحلة خيالية في العالم الآخر يصوّر فيها مشاهد من الجنة والنار، حيث يلتقي بالشعراء والأدباء ويناقش قضايا العقيدة والشعر والفكر الإنساني. تُعد من أعظم النصوص التراثية التي تمزج بين الأدب والفلسفة والخيال، وتكشف عن عمق رؤية المعري النقدية والفكرية.
+                   </p>
+                <a href="books/من تراثنا العربي/رسالة الغفران/رسالة_الغفران.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // كود لجعل القائمة المنسدلة تعمل عند النقر على الهواتف
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.querySelector('.menu-button');
+        const dropdownContent = document.querySelector('.dropdown-content');
+        
+        menuButton.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.stopPropagation();
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+        
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && dropdownContent.style.display === 'block' && 
+                !menuButton.contains(e.target) && !dropdownContent.contains(e.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

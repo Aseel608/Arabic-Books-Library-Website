@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> قسم القصص البوليسية - مكتبة الأندلس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #c17d3e;
+            --accent-hover: #d98c44;
+            --gold: #d4af37;
+            --islamic-green: #2a5934;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            overflow-x: hidden;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* تنسيق عام للقسم */
+        .islamic-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            color: var(--text-primary);
+            text-align: center;
+            position: relative;
+        }
+
+        .islamic-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="islamicPattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(193,125,62,0.1)"/><path d="M5 5 L15 15 M15 5 L5 15" stroke="rgba(193,125,62,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23islamicPattern)"/></svg>');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to left, var(--accent), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* تنسيق القائمة المنسدلة */
+        .books-menu {
+            position: relative;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        .menu-button {
+            background: linear-gradient(135deg, var(--islamic-green) 0%, #3a6b47 100%);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(135deg, #3a6b47 0%, #4a7b57 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(42, 89, 52, 0.6);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--card-bg);
+            min-width: 280px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            z-index: 100;
+            right: 0;
+            margin-top: 15px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text-primary);
+            padding: 15px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(193, 125, 62, 0.1);
+            color: var(--accent);
+            padding-right: 25px;
+        }
+
+        .dropdown-content a i {
+            margin-left: 12px;
+            color: var(--accent);
+        }
+
+        .books-menu:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* تنسيق كتب العرض */
+        .featured-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            padding: 0 20px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--gold));
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: var(--accent);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .book-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .book-card .author {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 1.2rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .read-btn {
+            background: var(--islamic-green);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .read-btn:hover {
+            background: #3a6b47;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .featured-books {
+                grid-template-columns: 1fr;
+            }
+            
+            .dropdown-content {
+                right: auto;
+                left: 0;
+                min-width: 250px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .menu-button {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .book-card {
+            animation: fadeIn 0.5s ease;
+        }
+         .nav-link:hover::after {
+            width: 100%;
+        }
+       
+ .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .logo i {
+            margin-left: 0.5rem;
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+       
+  .logo {
+    text-decoration: none;   /* يشيل الخط */
+    color: d4af37;             /* اللون */
+    font-size: 32px;         /* حجم الخط */
+    font-weight: bold;       /* تخين */
+  }
+
+  .logo:hover {
+    color: d4af37;       /* يتغير اللون عند مرور الماوس */
+  }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <a href="index.html" class="logo"><span>مَكْتَبَةُ الْأَنْدَلُسِ</span></a>
+                
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link">الرَّئِيسِيَّة</a></li>
+                <li><a href="index.html#features" class="nav-link">مَا نَقْدِمُهُ</a></li>
+                <li><a href="index.html#collection" class="nav-link">أَقْسَامُنَا</a></li>
+                <li><a href="index.html#about" class="nav-link">مَنْ نَحْنُ</a></li>
+                <li><a href="index.html#contact" class="nav-link">تَوَاصَلْ مَعَنَا</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+
+<section class="islamic-section">
+    <div class="container">
+          <h2 class="section-title">قسم القصص البوليسية</h2>
+          <p class="section-subtitle">
+           انغمس في عالم مليء بالغموض والتشويق، حيث تُنسج الحبكات الذكية وتتصاعد الأحداث لتكشف أسرار الجرائم والألغاز المثيرة.
+           </p>
+
+        
+        <!-- القائمة المنسدلة -->
+        <div class="books-menu">
+            <button class="menu-button">
+                <i class="fas fa-book-open"></i>
+                الوصول السريع للكتب
+            </button>
+            <div class="dropdown-content">
+               <a href="https://downloads.hindawi.org/books/92093071.pdf" download target="_blank"><i class="fas fa-download"></i> الخوف يطارد القرية</a>
+
+                <a href="https://downloads.hindawi.org/books/93859204.pdf" download target="_blank"><i class="fas fa-download"></i> قضية فندق سميراميس</a>
+
+                <a href="https://downloads.hindawi.org/books/41392619.pdf" download target="_blank"><i class="fas fa-download"></i> الرهائن الثلاث</a>
+
+                <a href="https://downloads.hindawi.org/books/25153916.pdf" download target="_blank"><i class="fas fa-download"></i> لغز المنزل ٣١ نيو إن</a>
+
+                <a href="https://downloads.hindawi.org/books/94803157.pdf" download target="_blank"><i class="fas fa-download"></i> عدالة الآنسة بيم</a>
+
+                <a href="https://downloads.hindawi.org/books/31609295.pdf" download target="_blank"><i class="fas fa-download"></i> خطوة في الظلام</a>
+
+                <a href="https://downloads.hindawi.org/books/70381709.pdf" download target="_blank"><i class="fas fa-download"></i> ثماني جرائم كاملة</a>
+
+                <a href="https://downloads.hindawi.org/books/25739182.pdf" download target="_blank"><i class="fas fa-download"></i> اللعبة القاتلة</a>
+
+                <a href="https://downloads.hindawi.org/books/61828647.pdf" download target="_blank"><i class="fas fa-download"></i> رجال العدالة الثلاثة</a>
+
+                <a href="https://downloads.hindawi.org/books/35759391.pdf" download target="_blank"><i class="fas fa-download"></i> ابنة الزمن</a>
+
+                <a href="https://downloads.hindawi.org/books/17537283.pdf" download target="_blank"><i class="fas fa-download"></i> الرمال المُغنية</a>
+
+                <a href="https://downloads.hindawi.org/books/97969752.pdf" download target="_blank"><i class="fas fa-download"></i> لغز جرس التصويت</a>
+
+                <a href="https://downloads.hindawi.org/books/90469264.pdf" download target="_blank"><i class="fas fa-download"></i> قضية منزل فرنتشايز</a>
+
+                <a href="https://downloads.hindawi.org/books/58471520.pdf" download target="_blank"><i class="fas fa-download"></i> صرخة في سوهو</a>
+
+                <a href="https://downloads.hindawi.org/books/24290624.pdf" download target="_blank"><i class="fas fa-download"></i> جريمتا واجهة العرض</a>
+
+
+
+            </div>
+        </div>
+
+        <!-- كتب مميزة -->
+        <div class="featured-books">
+           
+           <!-- الكتاب 1 -->
+             <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/92093071.svg?v=3" alt="   الخوف يطارد القرية">
+              <h3> الخوف يطارد القرية</h3>
+              <span class="author"> إثيل لينا وايت</span>
+              <p class="description">
+               رواية غموض وإثارة تدور أحداثها في قرية إنجليزية صغيرة يخيّم عليها جو من الخوف والريبة. من خلال شخصياتها المعقدة وأحداثها المشوقة، تكشف الكاتبة عن تأثير الخوف الجماعي على المجتمع وكيف يمكن أن يغيّر مصائر الأفراد.
+               </p>
+
+                <div class="book-actions">
+                    <a href="https://downloads.hindawi.org/books/92093071.pdf" target="_blank" class="read-btn">قراءة الكتاب</a>
+                    <a href="https://downloads.hindawi.org/books/92093071.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+                </div>
+            </div>
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/93859204.svg?v=3" alt="  قضية فندق سميراميس">
+                <h3> قضية فندق سميراميس</h3>
+                <span class="author">     إيه إي دبليو ماسون</span>
+                <p class="description">
+                  رواية بوليسية كلاسيكية تدور حول جريمة غامضة تقع في فندق سميراميس الشهير. ينسج الكاتب حبكة مشوقة مليئة بالتفاصيل والتحقيقات التي تكشف أسرار الشخصيات واحدًا تلو الآخر، مما يجعل القارئ يعيش أجواء الإثارة والتشويق حتى اللحظة الأخيرة.
+                  </p>
+
+                <a href="https://downloads.hindawi.org/books/93859204.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/93859204.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/41392619.svg?v=2" alt=" الرهائن الثلاث   ">
+                <h3> الرهائن الثلاث</h3>
+                <span class="author">  جون بوكان</span>
+               <p class="description">
+                  رواية مغامرات وتشويق من سلسلة ريتشارد هاناي، تدور حول اختطاف ثلاثة أشخاص مهمين، ويُكلَّف البطل بمهمة إنقاذهم. تجمع الرواية بين الغموض السياسي والإثارة، وتعكس أجواء ما بعد الحرب العالمية الأولى حيث تتشابك المؤامرات الدولية مع المغامرات الفردية.
+                  </p>
+
+                  <a href="https://downloads.hindawi.org/books/41392619.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                  <a href="https://downloads.hindawi.org/books/41392619.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+             </div>  
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/25153916.svg?v=2" alt="     لغز المنزل ٣١ نيو إن">
+                <h3>  لغز المنزل ٣١ نيو إن</h3>
+                <span class="author">  آر أوستن فريمان</span>
+                 <p class="description">
+                    رواية بوليسية مشوّقة من سلسلة المحقق الدكتور ثورندايك، تدور حول جريمة غامضة وقعت في منزل رقم ٣١ بشارع نيو إن. يستخدم المحقق أساليبه العلمية الدقيقة وتحليلاته المنهجية لكشف ملابسات القضية. تعد الرواية مثالاً مبكراً على توظيف العلم والمنطق في الأدب البوليسي.
+                  </p>
+
+                <a href="https://downloads.hindawi.org/books/25153916.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/25153916.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/94803157.svg?v=2" alt="      عدالة الآنسة بيم">
+                <h3>  عدالة الآنسة بيم</h3>
+                <span class="author">  جوزفين تاي</span>
+                <p class="description">
+                   رواية بوليسية نفسية تدور أحداثها في كلية لتدريب المعلمات، حيث تُدعى الآنسة بيم لإلقاء محاضرة. تنقلب الأجواء الهادئة عندما تقع حادثة غامضة تدفع البطلة للتساؤل عما إذا كانت جريمة قد ارتكبت. بأسلوبها الدقيق، تمزج جوزفين تاي بين تحليل الشخصيات والجو المشوّق لتقديم واحدة من أبرز رواياتها.
+                    </p>
+
+                <a href="https://downloads.hindawi.org/books/94803157.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/94803157.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/31609295.svg?v=2" alt=" خطوة في الظلام">
+                <h3>  خطوة في الظلام</h3>
+                <span class="author"> إثيل لينا وايت</span>
+                <p class="description">
+                 أجواء مليئة بالريبة والخطر. بأسلوب مشوّق، تنسج إثيل لينا وايت قصة عن الخوف، الشك، والعلاقات الإنسانية المظلمة، مما يجعل القارئ في حالة ترقّب مستمرة حتى النهاية.
+                  </p>
+
+                <a href="https://downloads.hindawi.org/books/31609295.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/31609295.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/70381709.svg?v=3" alt="   ثماني جرائم كاملة">
+                <h3> ثماني جرائم كاملة</h3>
+                <span class="author"> بيتر سوانسون</span>
+                <p class="description">
+               رواية جريمة وتشويق معاصرة تبدأ حين ينشر صاحب مكتبة مدونة عن أشهر ثماني جرائم مثالية في الأدب البوليسي. بشكل غامض، يبدأ قاتل مجهول بتنفيذ جرائم حقيقية تستند إلى تلك القائمة، مما يضع البطل في قلب لعبة خطيرة حيث يصبح الأدب مرآة للواقع.
+                </p>
+
+                <a href="https://downloads.hindawi.org/books/70381709.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/70381709.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/25739182.svg?v=5" alt="   اللعبة القاتلة">
+                <h3> اللعبة القاتلة</h3>
+                <span class="author">    محمود سالم</span>
+               <p class="description">
+              رواية بوليسية من سلسلة "المغامرون الخمسة"، حيث يجد الأصدقاء أنفسهم في مواجهة لغز جديد مليء بالمخاطر أثناء محاولتهم كشف حقيقة "اللعبة القاتلة". بأسلوب شيّق وسرد سريع الإيقاع، يقدّم محمود سالم مغامرة تجمع بين الذكاء، الشجاعة، وروح الفريق.
+                 </p>
+
+                <a href="https://downloads.hindawi.org/books/25739182.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/25739182.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/61828647.svg?v=5" alt="  رجال العدالة الثلاثة">
+                <h3>   رجال العدالة الثلاثة</h3>
+                <span class="author"> إدجار والاس</span>
+                 <p class="description">
+                   رواية جريمة وإثارة تدور حول ثلاثة رجال يقررون تطبيق العدالة بطريقتهم الخاصة خارج حدود القانون. يتعقبون المجرمين والخونة ويعاقبونهم بوسائل سرية لا تستطيع السلطات الوصول إليها. بأسلوب مشوّق وسرد سريع، يقدم إدجار والاس واحدة من أبرز رواياته البوليسية الكلاسيكية.
+                   </p>
+                <a href="https://downloads.hindawi.org/books/61828647.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/61828647.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/35759391.svg?v=5" alt=" ابنة الزمن">
+                <h3> ابنة الزمن</h3>
+                <span class="author">  جوزفين تاي</span>
+              <p class="description">
+              رواية بوليسية تاريخية تعتبر من أبرز أعمال جوزفين تاي، حيث يرقد المفتش آلان غرانت في المستشفى ويقضي وقته في التحقيق بتاريخ الملك ريتشارد الثالث. عبر البحث في الوثائق والشخصيات التاريخية، يعيد النظر في واحدة من أكثر القضايا إثارة للجدل في التاريخ الإنجليزي، ويطرح تساؤلات عميقة حول الحقيقة والعدالة.
+                  </p>
+
+                <a href="https://downloads.hindawi.org/books/35759391.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/35759391.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/17537283.svg?v=5" alt=" الرمال المُغنية">
+                <h3> الرمال المُغنية</h3>
+                <span class="author">  جوزفين تاي</span>
+               <p class="description">
+               رواية بوليسية من سلسلة المفتش آلان غرانت، تبدأ عندما يُعثر على جثة رجل في قطار ليلي، وبحوزته قصاصة ورق تحمل لغزًا غامضًا عن "الرمال المُغنية". ينطلق غرانت، رغم معاناته من إرهاق نفسي، في رحلة لكشف حقيقة الجريمة التي تقوده إلى اسكتلندا والصحراء العربية. تجمع الرواية بين الغموض والتأمل في الطبيعة الإنسانية.
+                </p>
+                <a href="https://downloads.hindawi.org/books/17537283.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/17537283.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/97969752.svg?v=5" alt="  لغز جرس التصويت">
+                <h3>  لغز جرس التصويت</h3>
+                <span class="author"> إلين ويلكنسون</span>
+                <p class="description">
+               رواية بوليسية كلاسيكية تدور أحداثها في مجلس العموم البريطاني، حيث يُعثر على رجل أعمال ثري مقتولًا في قاعة البرلمان. يتولى سكرتير أحد الوزراء التحقيق في القضية، لتنكشف أسرار تتعلق بالسياسة والمصالح الخاصة. بأسلوب مشوّق، تمزج إلين ويلكنسون بين الإثارة البوليسية وأجواء الحياة السياسية في بريطانيا بين الحربين.
+                 </p>
+
+                <a href="https://downloads.hindawi.org/books/97969752.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/97969752.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/90469264.svg?v=5" alt="قضية منزل فرنتشايز">
+                <h3>  قضية منزل فرنتشايز</h3>
+                <span class="author"> جوزفين تاي</span>
+               <p class="description">
+                   رواية بوليسية من سلسلة المفتش آلان غرانت، تبدأ بالعثور على جثة ممثلة شهيرة على الشاطئ. في البداية يُظن أن موتها كان حادث غرق، لكن التحقيق يكشف خيوطًا معقدة تتعلق بالشهرة والعلاقات والغيرة. بأسلوبها المميز، تمزج جوزفين تاي بين الغموض وتحليل النفس البشرية في واحدة من أجمل رواياتها البوليسية.
+                  </p>
+                <a href="https://downloads.hindawi.org/books/90469264.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/90469264.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/58471520.svg?v=5" alt=" صرخة في سوهو">
+                <h3> صرخة في سوهو</h3>
+                <span class="author"> جون جي براندن</span>
+                <p class="description">
+               رواية جريمة وتشويق تدور أحداثها في حي سوهو اللندني خلال الحرب العالمية الثانية. تتبع القصة المفتش باتريك ألويسيوس ماكغراث وهو يواجه سلسلة من الجرائم المعقدة والمؤامرات التي تتشابك مع أجواء الجاسوسية والخطر في زمن الحرب. تجمع الرواية بين الغموض البوليسي والإثارة التاريخية.
+                 </p>
+                <a href="https://downloads.hindawi.org/books/58471520.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/58471520.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/24290624.svg?v=5" alt="    جريمتا واجهة العرض">
+                <h3>  جريمتا واجهة العرض</h3>
+                <span class="author">  جون هازليت فاهي</span>
+                <p class="description">
+                 رواية بوليسية مثيرة تدور حول جريمتين غامضتين تقعان في واجهة عرض أحد المتاجر الكبرى. مع تقدم التحقيق، تتكشف شبكة من الأسرار والدوافع الخفية التي تقود إلى حل غير متوقع. بأسلوب مشوّق وسرد متماسك، يقدم جون هازليت فاهي عملاً يعبّر عن روح الأدب البوليسي الكلاسيكي.
+                   </p>
+                <a href="https://downloads.hindawi.org/books/24290624.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/24290624.pdf" download class="download-btn" style="color: #3a6b47;"><i class="fas fa-download " style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // كود لجعل القائمة المنسدلة تعمل عند النقر على الهواتف
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.querySelector('.menu-button');
+        const dropdownContent = document.querySelector('.dropdown-content');
+        
+        menuButton.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.stopPropagation();
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+        
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && dropdownContent.style.display === 'block' && 
+                !menuButton.contains(e.target) && !dropdownContent.contains(e.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

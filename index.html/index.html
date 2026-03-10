@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَكْتَبَةُ الْأَنْدَلُسِ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="icon2.png">
+
+    <style>
+        :root {
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #c17d3e;
+            --accent-hover: #d98c44;
+            --gold: #d4af37;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            overflow-x: hidden;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* التنقل */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .logo i {
+            margin-left: 0.5rem;
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* قسم البطل */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 20px 50px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        .highlight {
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(193, 125, 62, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+        }
+
+        .floating-books {
+            position: relative;
+            height: 400px;
+        }
+
+        .book {
+            position: absolute;
+            font-size: 3.5rem;
+            color: var(--accent);
+            animation: float 6s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(193, 125, 62, 0.6);
+        }
+
+        .book-1 { top: 10%; right: 20%; animation-delay: 0s; }
+        .book-2 { top: 40%; right: 50%; animation-delay: 2s; }
+        .book-3 { top: 20%; right: 70%; animation-delay: 4s; }
+        .book-4 { top: 60%; right: 30%; animation-delay: 1s; }
+
+        /* الأقسام */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to left, var(--accent), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* مَا نَقْدِمُهُ */
+        .features {
+            background: var(--darker-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: right;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--gold));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0 1.5rem auto;
+            font-size: 2.2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.6rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* المجموعة */
+        .collection {
+            background: var(--dark-bg);
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .book-cover {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .book-card:hover .book-cover img {
+            transform: scale(1.1);
+        }
+
+        .book-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .book-card:hover .book-overlay {
+            opacity: 1;
+        }
+
+        .btn-read {
+            padding: 10px 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-read:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .book-info {
+            padding: 1.5rem;
+        }
+
+        .book-info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+        }
+
+        .author {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .genre {
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            color: #ffd700;
+        }
+
+        .view-more {
+            text-align: center;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 12px 30px;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* من نحن */
+        .about {
+            background: var(--darker-bg);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(193,125,62,0.2), rgba(102,126,234,0.2));
+        }
+
+        /* تواصل معنا */
+        .contact {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+        }
+
+        .contact .section-title {
+            color: var(--text-primary);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .contact-info i {
+            margin-left: 1rem;
+            color: var(--accent);
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .contact-form button {
+            margin-top: 1rem;
+        }
+
+        /* الفوتر */
+        .footer {
+            background: var(--darker-bg);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .animate-text {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                right: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--card-bg);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.2);
+                padding: 2rem 0;
+                border-top: 1px solid var(--border);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 120px 20px 50px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-image {
+                margin-top: 3rem;
+                height: 300px;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid,
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .book {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>مَكْتَبَةُ الْأَنْدَلُسِ</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">الرَّئِيسِيَّة</a></li>
+                <li><a href="#features" class="nav-link">مَا نَقْدِمُهُ</a></li>
+                <li><a href="#collection" class="nav-link">أَقْسَامُنَا</a></li>
+                <li><a href="#about" class="nav-link">مَنْ نَحْنُ</a></li>
+                <li><a href="#contact" class="nav-link">تَوَاصَلْ مَعَنَا</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section  class="hero">
+        <div class="hero-content" id="home">
+            <div class="hero-text">
+                <h1 class="hero-title animate-text">اِكْتَشِفْ <span class="highlight">كِتَابُكَ المُفَضَّلُ</span></h1>
+                <p class="hero-subtitle">اِسْتَكْشِفْ مَجْمُوعَتَنَا الْوَاسِعَةَ مِنَ الْكُتُبِ مِنْ حَوْلِ الْعَالَمِ. رِحْلَتُكَ الْقِرَائِيَّةُ تَبْدَأُ مِنْ هُنَا.</p>
+                <div class="hero-buttons">
+                    <a href="#collection" class="btn btn-primary">اِسْتَكْشِفِ الْمَجْمُوعَةَ</a>
+                    <a href="#contact" class="btn btn-secondary"> تَوَاصَلْ مَعَنَا</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-books">
+                    <div class="book book-1"><i class="fa fa-book-open"></i></div>
+                    <div class="book book-1"><i class="fa fa-book-open"></i></div>
+                    <div class="book book-2"><i class="fas fa-book"></i></div>
+                    <div class="book book-3"><i class="fas fa-book"></i></div>
+                    <div class="book book-4"><i class="fas fa-book"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- مَا نَقْدِمُهُ -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">مَا نَقْدِمُهُ</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3>مَجْمُوعَةٌ وَاسِعَةٌ</h3>
+                    <p>أكثر من 200 كتاب في جميع الأنواع لكل قارئ</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>وُصُولٌ عَلَى مَدَارِ 24/7 سَاعَةً</h3>
+                    <p>مكتبة رقمية متاحة في أي وقت ومكان ومن أي جهاز</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>فعاليات مجتمعية</h3>
+                    <p>انضم إلى أندية القراءة وجلسات الحوار مع المؤلفين وتحديات القراءة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Section -->
+    <section id="collection" class="collection">
+        <div class="container">
+            <h2 class="section-title">المَجْمُوعَةُ المُخَصَّصَةُ</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="76b48d41-32ce-4d9d-b9c9-a9f3e7e8fbdb.webp" alt="الكتب الاسلامية">
+                        <div class="book-overlay">
+                            <a href="islamic.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="islamic.html" class="btn-read">
+                    <div class="book-info">
+                        <h3>الكتب الإسلامية</h3>
+                        <span class="author">نور يهتدى به، وعلم يستقى منه</span>
+                        <p class="genre">دليل حياة، ومنارة حق، وذخيرة للآخرة</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="الكتب الادبيه.jpg" alt="الكتب الأدبية">
+                        <div class="book-overlay">
+                         <a href="الكتبالادبيه.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="الكتبالادبيه.html" class="btn-read">
+                    <div class="book-info">
+                        <h3>الكتب الأدبية </h3>
+                        <span class="author">تضم الكتب الأدبية مجموعة من أروع الأعمال التي تعبّر عن المشاعر والتجارب الإنسانية من خلال الرواية، الشعر، القصة القصيرة، وأدب الرحلات.</span>
+                        <p class="genre">  نسافر عبر الكلمات، ونكتشف جمال اللغة وروعة التعبير</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="الكتب الفكرية والفلسفية.jpg" alt=" الكتب الفكرية والفلسفية">
+                        <div class="book-overlay">
+                             <a href="الكتبالفكريةوالفلسفية.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="الكتبالفكريةوالفلسفية.html" class="btn-read">
+                    <div class="book-info">
+                        <h3> الكتب الفكرية والفلسفية</h3>
+                        <span class="author"> كتب تستعرض الأفكار العميقة والتأملات الفلسفية التي شكّلت تاريخ الفكر البشري، من الفلسفة الإسلامية إلى المدارس الغربية</span>
+                        <p class="genre"> في رحلة لفهم الإنسان والعالم.</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                   </a>
+                </div>
+                 <div class="book-card">
+                    <div class="book-cover">
+                        <img src="الكتب التاريخيه.jpg" alt=" الكتب التاريخية">
+                        <div class="book-overlay">
+                            <a href="التاريخيه.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="التاريخيه.html" class="btn-read">
+                    <div class="book-info">
+                        <h3> الكتب التاريخية</h3>
+                        <span class="author">توثّق أحداث الماضي، وتروي سيرة حضارات وأمم وشخصيات خلدها التاريخ.</span>
+                        <p class="genre"> نعيد قراءة التاريخ بفهم أعمق ووعي أوسع.</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    </a>
+                 </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="الكتب العلمية.jpg" alt=" الكتب العلمية">
+                        <div class="book-overlay">
+                             <a href="الكتبالعلمية.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="الكتبالعلمية.html" class="btn-read">
+                    <div class="book-info">
+                       <h2 >قسم الكتب العلمية</h2>
+                        <span class="author"> إذا كنت شغوفاً بالمعرفة، فهذا القسم العلمي هو دليلك لفهم أسرار الكون والتكنولوجيا، من خلال كتب ممتعة وثرية بالمعلومات.</span>
+                        <p class="genre"> في رحلة لفهم الإنسان والعالم.</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    </a>
+
+                </div>  
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="الخيال العلمي.jpg" alt="  الخيال العلمي">
+                        <div class="book-overlay">
+                             <a href="الخيالالعلمي.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="الخيالالعلمي.html" class="btn-read">
+                    <div class="book-info">
+                       <h2>قسم كتب الخيال العلمي</h2>
+                       <span class="author">إذا كنت تحب استكشاف المستقبل والتفكير خارج حدود المألوف، فإن كتب الخيال العلمي تأخذك إلى عوالم مبتكرة حيث يمتزج الواقع بالاحتمال.</span>
+                        <p class="genre">انطلق في مغامرة فكرية لفهم الإنسان، والكون، والتقنية من منظور جديد وغير متوقع.</p>
+
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    </a>
+
+                </div>  
+                <div class="book-card">
+                    <div class="book-cover">
+                       <img src="قسم القصص البوليسيىة.jpeg" alt="  قسم القصص البوليسيىة">
+                        <div class="book-overlay">
+                              <a href="القصصالبوليسية.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="القصصالبوليسية.html" class="btn-read">
+                    <div class="book-info">
+                       <h2>قسم القصص البوليسية</h2>
+                      <span class="author">إذا كنت من محبّي الغموض والإثارة، فهنا ستجد القصص التي تأخذك في عالم التحقيقات، والألغاز، والجرائم الغامضة التي لا تُحل إلا بذكاء خارق.</span>
+                      <p class="genre">رحلة مشوقة في عالم الجريمة والعقول اللامعة.</p>
+
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    </a>
+                    
+
+                </div>  
+                <div class="book-card">
+                    <div class="book-cover">
+                         <img src="من تراثنا العربي.jpg" alt="  من تراثنا العربي">
+                        <div class="book-overlay">
+                             <a href="منتراثناالعربي.html" class="btn-read">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                    <a href="منتراثناالعربي.html" class="btn-read">
+                    <div class="book-info">
+                        
+                       <h2 >قسم من تراثنا العربي</h2>
+                        <span class="author"> إذا كنت شغوفاً بالمعرفة، فهذا القسم العلمي هو دليلك لفهم أسرار الكون والتكنولوجيا، من خلال كتب ممتعة وثرية بالمعلومات.</span>
+                        <p class="genre"> في رحلة لفهم الإنسان والعالم.</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                   </a>
+                    
+
+                </div>  
+                
+
+                
+            </div>
+
+         
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">مَنْ نَحْنُ</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>مَكْتَبَةُ الْأَنْدَلُسِ هي مكتبة تهدف الئ نشر المحتوى العربي على الإنترنت وتوفير الكتب العربية في مختلف المجالات.</p>
+                    <p>نؤمن بقوة المعرفة وقدرتها على تغيير المجتمعات، ونسعى لجعل الثقافة العربية متاحة للجميع في كل مكان.</p>
+                    
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Library Interior">
+                    <div class="image-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">تَوَاصَلْ مَعَنَا</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>لتواصل </h3>
+                   
+                    <p><i class="fas fa-phone"></i> 0559315030</p>
+                    <p><i class="fas fa-envelope"></i>aseelalqufiash4@gmail.com</p>
+                    
+                    
+                </div>
+                <form class="contact-form" action="https://formspree.io/f/mrbarebo" method="POST">
+                      <input type="text" name="name" placeholder="اسمك" required>
+                      <input type="email" name="email" placeholder="بريدك الإلكتروني" required>
+                      <textarea name="message" placeholder="رسالتك" rows="5" required></textarea>
+                      <button type="submit" class="btn btn-primary">أرسل الرسالة</button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 مَكْتَبَةُ الْأَنْدَلُسِ. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // كود JavaScript للقائمة المتحركة والعناصر التفاعلية
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // إغلاق القائمة عند النقر على رابط
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // تأثير العدّاد للإحصاءات
+            const counters = document.querySelectorAll('.stat-number');
+            let animated = false;
+            
+            function animateCounters() {
+                if (!animated && window.scrollY > document.getElementById('about').offsetTop - 500) {
+                    animated = true;
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-count');
+                        const count = +counter.innerText;
+                        const increment = target / 100;
+                        
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + increment);
+                            setTimeout(() => animateCounter(counter, target, increment), 20);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    });
+                }
+            }
+            
+            function animateCounter(counter, target, increment) {
+                const count = +counter.innerText;
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(() => animateCounter(counter, target, increment), 20);
+                } else {
+                    counter.innerText = target;
+                }
+            }
+            
+            window.addEventListener('scroll', animateCounters);
+        });
+    </script>
+</body>
+</html>

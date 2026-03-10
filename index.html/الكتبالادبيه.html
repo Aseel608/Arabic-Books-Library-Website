@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القسم الادبي - مكتبة الأندلس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #c17d3e;
+            --accent-hover: #d98c44;
+            --gold: #d4af37;
+            --islamic-green: #2a5934;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            overflow-x: hidden;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* تنسيق عام للقسم */
+        .islamic-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            color: var(--text-primary);
+            text-align: center;
+            position: relative;
+        }
+
+        .islamic-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="islamicPattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(193,125,62,0.1)"/><path d="M5 5 L15 15 M15 5 L5 15" stroke="rgba(193,125,62,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23islamicPattern)"/></svg>');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to left, var(--accent), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* تنسيق القائمة المنسدلة */
+        .books-menu {
+            position: relative;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        .menu-button {
+            background: linear-gradient(135deg, var(--islamic-green) 0%, #3a6b47 100%);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(135deg, #3a6b47 0%, #4a7b57 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(42, 89, 52, 0.6);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--card-bg);
+            min-width: 280px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            z-index: 100;
+            right: 0;
+            margin-top: 15px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text-primary);
+            padding: 15px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(193, 125, 62, 0.1);
+            color: var(--accent);
+            padding-right: 25px;
+        }
+
+        .dropdown-content a i {
+            margin-left: 12px;
+            color: var(--accent);
+        }
+
+        .books-menu:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* تنسيق كتب العرض */
+        .featured-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            padding: 0 20px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--gold));
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: var(--accent);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .book-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .book-card .author {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 1.2rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .read-btn {
+            background: var(--islamic-green);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .read-btn:hover {
+            background: #3a6b47;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .featured-books {
+                grid-template-columns: 1fr;
+            }
+            
+            .dropdown-content {
+                right: auto;
+                left: 0;
+                min-width: 250px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .menu-button {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .book-card {
+            animation: fadeIn 0.5s ease;
+        }
+           .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .logo i {
+            margin-left: 0.5rem;
+            color: var(--accent);
+        }
+          .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+       
+  .logo {
+    text-decoration: none;   /* يشيل الخط */
+    color: d4af37;             /* اللون */
+    font-size: 32px;         /* حجم الخط */
+    font-weight: bold;       /* تخين */
+  }
+
+  .logo:hover {
+    color: d4af37;       /* يتغير اللون عند مرور الماوس */
+  }
+    </style>
+</head>
+<body>
+     <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <a href="index.html" class="logo"><span>مَكْتَبَةُ الْأَنْدَلُسِ</span></a>
+                
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link">الرَّئِيسِيَّة</a></li>
+                <li><a href="index.html#features" class="nav-link">مَا نَقْدِمُهُ</a></li>
+                <li><a href="index.html#collection" class="nav-link">أَقْسَامُنَا</a></li>
+                <li><a href="index.html#about" class="nav-link">مَنْ نَحْنُ</a></li>
+                <li><a href="index.html#contact" class="nav-link">تَوَاصَلْ مَعَنَا</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+
+<section class="islamic-section">
+    <div class="container">
+        <h2 class="section-title">قسم الكتب الادبيه</h2>
+        <p class="section-subtitle">إبداع الكلمة وجمال التعبير في عوالم الأدب الرحبة، حيث تتجلى بلاغة اللغة وتعبيراتها المشرقة في كل نص أدبي خالد</p>
+        
+        <!-- القائمة المنسدلة -->
+        <div class="books-menu">
+            <button class="menu-button">
+                <i class="fas fa-book-open"></i>
+                الوصول السريع للكتب
+            </button>
+            <div class="dropdown-content">
+                <a href="https://downloads.hindawi.org/books/26096839.pdf" download target="_blank"><i class="fas fa-download"></i> رسائل الحب والحزن والثورة</a>
+                <a href="https://downloads.hindawi.org/books/41372030.pdf" download target="_blank"><i class="fas fa-download"></i> الكهف</a>
+                <a href="https://downloads.hindawi.org/books/53148528.pdf" download target="_blank"><i class="fas fa-download"></i> الجبل الأسود</a>
+                <a href="https://downloads.hindawi.org/books/72080496.pdf" download target="_blank"><i class="fas fa-download"></i> المياه السوداء</a>
+                <a href="https://downloads.hindawi.org/books/29297191.pdf" download target="_blank"><i class="fas fa-download"></i>  حكاية رعب</a>
+                <a href="https://downloads.hindawi.org/books/15020962.pdf" download target="_blank"><i class="fas fa-download"></i> المنديل الأصفر</a>
+                <a href="https://downloads.hindawi.org/books/75707574.pdf" download target="_blank"><i class="fas fa-download"></i> نحو الغرب</a>
+                <a href="https://downloads.hindawi.org/books/75862428.pdf" download target="_blank"><i class="fas fa-download"></i> الجانب الآخر من السياج</a>
+                <a href="https://downloads.hindawi.org/books/48080926.pdf" download target="_blank"><i class="fas fa-download"></i>الثابت</a>
+                <a href="https://downloads.hindawi.org/books/82835153.pdf" download target="_blank"><i class="fas fa-download"></i> مملكة الفحم</a>
+                <a href="https://downloads.hindawi.org/books/14697506.pdf" download target="_blank"><i class="fas fa-download"></i> ذو العباءة الخضراء</a>
+                <a href="https://downloads.hindawi.org/books/61586203.pdf" download target="_blank"><i class="fas fa-download"></i> مجرد قطعة لحم</a>
+                <a href="https://downloads.hindawi.org/books/28524640.pdf" download target="_blank"><i class="fas fa-download"></i> أخدود الذهب الخالص</a>
+                <a href="https://downloads.hindawi.org/books/14294061.pdf" download target="_blank"><i class="fas fa-download"></i> قصص من جوته</a>
+                <a href="https://downloads.hindawi.org/books/51574037.pdf" download target="_blank"><i class="fas fa-download"></i> محاولات للنجاة</a>
+                
+            </div>
+        </div>
+
+        <!-- كتب مميزة -->
+        <div class="featured-books">
+            <!-- الكتاب 1 -->
+                      <!-- الكتاب 1 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/26096839.svg?v=2" alt=" رسائل الحب والحزن والثورة">
+                <h3> رسائل الحب والحزن والثورة</h3>
+                <span class="author"> عبد العظيم أنيس</span>
+                <p class="description">
+                مجموعة من المقالات والرسائل الفكرية والأدبية، 
+                تعكس هموم الكاتب وتجربته الإنسانية في مواجهة الحب والحزن وقضايا الثورة، 
+                وتقدم رؤية نقدية للمجتمع والتحولات السياسية والفكرية في عصره.
+                </p>
+                <a href="https://downloads.hindawi.org/books/26096839.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/26096839.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/41372030.svg?v=2" alt="الكهف">
+                <h3>   الكهف </h3>
+                <span class="author">  كيت موس </span>
+                <p class="description">
+               رواية مشوّقة تمزج بين الغموض والمغامرة، 
+                تدور أحداثها حول أسرار مدفونة في أعماق الكهوف، 
+                 وتكشف عن صراعات بين الماضي والحاضر في إطار درامي مثير.
+                 </p>
+                <a href="https://downloads.hindawi.org/books/41372030.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/41372030.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/53148528.svg?v=3" alt="الجبل الأسود">
+                <h3>الجبل الأسود</h3>
+                <span class="author"> كيت موس</span>
+                <p class="description">
+               رواية تاريخية مشوّقة تنسج أحداثها بين الأسطورة والواقع، 
+               حيث تكشف عن أسرار مدفونة وصراعات إنسانية عميقة 
+               في أجواء يغلب عليها الغموض والإثارة.
+              </p>
+                <a href="https://downloads.hindawi.org/books/53148528.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/53148528.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/72080496.svg?v=3" alt="    المياه السوداء">
+                <h3>    المياه السوداء</h3>
+                <span class="author"> كون إيجولدن</span>
+                <p class="description">
+                رواية تاريخية مشوّقة تستحضر أجواء الصراع والمغامرة، 
+                حيث تتقاطع مسارات الأبطال مع أحداث كبرى تشكل منعطفاً 
+                في التاريخ، وتكشف عن قوى الطموح والخيانات والمصائر المحتومة.
+                </p>
+                <a href="https://downloads.hindawi.org/books/72080496.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/72080496.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/29297191.svg?v=2" alt="حكاية رعب">
+                <h3>حكاية رعب</h3>
+                <span class="author">إي إم فورستر</span>
+                <p class="description">
+                قصة قصيرة تنتمي إلى أدب الرعب الكلاسيكي، 
+                تمزج بين الغموض والتشويق بأسلوب سردي مميز، 
+                لتكشف عن توتر الإنسان أمام المجهول وقوة الخيال المظلم.
+                </p>
+                <a href="https://downloads.hindawi.org/books/29297191.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/29297191.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/15020962.svg?v=3" alt="المنديل الأصفر">
+                <h3>المنديل الأصفر</h3>
+                <span class="author">جاك لندن</span>
+              <p class="description">
+               قصة قصيرة إنسانية عميقة، 
+                تصور لحظة انتظار مؤثرة لرجل أنهكته التجارب، 
+               يبحث عن فرصة جديدة مع الحياة والحب، 
+                بأسلوب جاك لندن الواقعي المفعم بالعاطفة.
+                 </p>
+                <a href="https://downloads.hindawi.org/books/15020962.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/15020962.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/75707574.svg?v=3" alt="نحو الغرب">
+                <h3>نحو الغرب</h3>
+                <span class="author">جاك لندن</span>
+                <p class="description">
+                  رحلة أدبية مثيرة يصف فيها جاك لندن مغامراته في الغرب الأميركي 
+                 وما واجهه من تحديات في الطبيعة القاسية، 
+                   لتشكل شهادة حيّة على روح المغامرة والبحث عن الحرية.
+                 </p>
+                <a href="https://downloads.hindawi.org/books/75707574.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/75707574.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/75862428.svg?v=2" alt="الجانب الآخر من السياج">
+                <h3>الجانب الآخر من السياج</h3>
+                <span class="author">إي إم فورستر</span>
+                <p class="description">
+                قصة رمزية قصيرة تستكشف صراع الإنسان بين سباق الحياة المادي 
+               والسعي نحو الراحة الروحية، 
+               حيث يقدم فورستر تأملاً عميقاً في معنى الطريق والغاية من الوجود.
+              </p>
+                <a href="https://downloads.hindawi.org/books/75862428.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/75862428.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/48080926.svg?v=2" alt="الثابت">
+                <h3>الثابت</h3>
+                <span class="author">جون بوكان</span>
+                <p class="description">
+                 قصة مشوّقة تحمل ملامح المغامرة والرمزية، 
+              تبرز ثبات الإنسان أمام التحديات، 
+               وتعكس أسلوب بوكان المميز في المزج بين السرد البوليسي والتأمل الأخلاقي.
+                 </p>
+                <a href="https://downloads.hindawi.org/books/48080926.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/48080926.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/82835153.svg?v=2" alt="مملكة الفحم">
+                <h3>مملكة الفحم</h3>
+                <span class="author">أبتون سِنكلير</span>
+                <p class="description">
+              رواية اجتماعية واقعية تكشف معاناة عمال المناجم وظروفهم القاسية،
+                وتفضح استغلال الرأسمالية لجماهير الكادحين. 
+             عمل أدبي يجمع بين قوة السرد والرسالة الإصلاحية.
+             </p>
+                <a href="https://downloads.hindawi.org/books/82835153.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/82835153.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/14697506.svg?v=3" alt="ذو العباءة الخضراء">
+                <h3>ذو العباءة الخضراء</h3>
+                <span class="author">جون بوكان</span>
+                <p class="description">
+               رواية تجسس ومغامرة مشوقة تدور في أجواء الحرب العالمية الأولى،
+              تتناول المؤامرات والصراعات الخفية التي تشكل خلفياتها السياسية.
+               عمل يجمع بين الإثارة والتشويق والتحليل التاريخي.
+               </p>
+                <a href="https://downloads.hindawi.org/books/14697506.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/14697506.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/61586203.svg?v=3" alt="مجرد قطعة لحم">
+                <h3>مجرد قطعة لحم</h3>
+                <span class="author">جاك لندن</span>
+                <p class="description">
+                     قصة قصيرة واقعية تكشف قسوة الفقر وصراع الإنسان من أجل البقاء،
+                      تقدم نقداً اجتماعياً مؤثراً يعكس رؤية جاك لندن للعلاقات الإنسانية
+                     وظروف الطبقات الكادحة.
+                       </p>
+                <a href="https://downloads.hindawi.org/books/61586203.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/61586203.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/28524640.svg?v=2" alt="أخدود الذهب الخالص">
+                <h3>أخدود الذهب الخالص</h3>
+                <span class="author">جاك لندن</span>
+                <p class="description">
+                 قصة مغامرة مثيرة من أدب جاك لندن، تسرد رحلة البحث عن الذهب في
+                 البراري القاسية، وتعكس صراع الإنسان مع الطبيعة والطمع والمصاعب
+                 التي تواجه الباحثين عن الثروة.
+                   </p>
+                <a href="https://downloads.hindawi.org/books/28524640.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/28524640.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/14294061.svg?v=2" alt="قصص من جوته">
+                <h3>قصص من جوته</h3>
+                <span class="author">جمع وترجمة عبد الغفار مكاوي</span>
+                <p class="description">
+                 مجموعة من القصص المختارة للأديب الألماني الكبير يوهان فولفغانغ فون جوته،
+                 نقلها إلى العربية عبد الغفار مكاوي بأسلوب رشيق، تعكس عمق الأدب الألماني
+                 وتنوع موضوعاته الإنسانية والفكرية.
+                   </p>
+                <a href="https://downloads.hindawi.org/books/14294061.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/14294061.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/51574037.svg?v=5" alt="محاولات للنجاة">
+                <h3>محاولات للنجاة</h3>
+                <span class="author">غسان نداف</span>
+                <p class="description">
+             بحث في التربية الفكرية في سياق النهوض الحضاري المنشود، يقدم رؤية استراتيجية لتطوير الفكر الإسلامي وتعزيز القدرات الفكرية للأمة.
+            </p>
+                <a href="https://downloads.hindawi.org/books/51574037.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/51574037.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+            </div>
+
+            
+        </div>
+    </div>
+</section>
+
+<script>
+    // كود لجعل القائمة المنسدلة تعمل عند النقر على الهواتف
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.querySelector('.menu-button');
+        const dropdownContent = document.querySelector('.dropdown-content');
+        
+        menuButton.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.stopPropagation();
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+        
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && dropdownContent.style.display === 'block' && 
+                !menuButton.contains(e.target) && !dropdownContent.contains(e.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

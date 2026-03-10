@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قسم كتب الخيال العلمي  - مكتبة الأندلس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #c17d3e;
+            --accent-hover: #d98c44;
+            --gold: #d4af37;
+            --islamic-green: #2a5934;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            overflow-x: hidden;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* تنسيق عام للقسم */
+        .islamic-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            color: var(--text-primary);
+            text-align: center;
+            position: relative;
+        }
+
+        .islamic-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="islamicPattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(193,125,62,0.1)"/><path d="M5 5 L15 15 M15 5 L5 15" stroke="rgba(193,125,62,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23islamicPattern)"/></svg>');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to left, var(--accent), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* تنسيق القائمة المنسدلة */
+        .books-menu {
+            position: relative;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        .menu-button {
+            background: linear-gradient(135deg, var(--islamic-green) 0%, #3a6b47 100%);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(135deg, #3a6b47 0%, #4a7b57 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(42, 89, 52, 0.6);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--card-bg);
+            min-width: 280px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            z-index: 100;
+            right: 0;
+            margin-top: 15px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text-primary);
+            padding: 15px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(193, 125, 62, 0.1);
+            color: var(--accent);
+            padding-right: 25px;
+        }
+
+        .dropdown-content a i {
+            margin-left: 12px;
+            color: var(--accent);
+        }
+
+        .books-menu:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* تنسيق كتب العرض */
+        .featured-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            padding: 0 20px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--gold));
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: var(--accent);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .book-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .book-card .author {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 1.2rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .read-btn {
+            background: var(--islamic-green);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .read-btn:hover {
+            background: #3a6b47;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(42, 89, 52, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .featured-books {
+                grid-template-columns: 1fr;
+            }
+            
+            .dropdown-content {
+                right: auto;
+                left: 0;
+                min-width: 250px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .menu-button {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .book-card {
+            animation: fadeIn 0.5s ease;
+        }
+         /* التنقل */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .logo i {
+            margin-left: 0.5rem;
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+       
+  .logo {
+    text-decoration: none;   /* يشيل الخط */
+    color: d4af37;             /* اللون */
+    font-size: 32px;         /* حجم الخط */
+    font-weight: bold;       /* تخين */
+  }
+
+  .logo:hover {
+    color: d4af37;       /* يتغير اللون عند مرور الماوس */
+  }
+
+
+    </style>
+</head>
+<body>
+     <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <a href="index.html" class="logo"><span>مَكْتَبَةُ الْأَنْدَلُسِ</span></a>
+                
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link">الرَّئِيسِيَّة</a></li>
+                <li><a href="index.html#features" class="nav-link">مَا نَقْدِمُهُ</a></li>
+                <li><a href="index.html#collection" class="nav-link">أَقْسَامُنَا</a></li>
+                <li><a href="index.html#about" class="nav-link">مَنْ نَحْنُ</a></li>
+                <li><a href="index.html#contact" class="nav-link">تَوَاصَلْ مَعَنَا</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+
+<section class="islamic-section">
+    <div class="container">
+          <h2 class="section-title">قسم   كتب الخيال العلمي</h2>
+          <p class="section-subtitle">اكتشف عالماً من المعرفة العلمية المبسطة والمثرية، حيث تلتقي الدقة بالوضوح لفهم أعمق للكون والحياة من حولنا.</p>
+
+        
+        <!-- القائمة المنسدلة -->
+        <div class="books-menu">
+            <button class="menu-button">
+                <i class="fas fa-book-open"></i>
+                الوصول السريع للكتب
+            </button>
+            <div class="dropdown-content">
+                <a href="https://downloads.hindawi.org/books/53742042.pdf" download target="_blank"><i class="fas fa-download"></i> الطاعون القرمزي</a>
+
+                <a href="https://downloads.hindawi.org/books/74859409.pdf" download target="_blank"><i class="fas fa-download"></i> الزيارة المدهشة</a>
+
+                <a href="https://downloads.hindawi.org/books/25093936.pdf" download target="_blank"><i class="fas fa-download"></i> حربنا مع إمارة موناكو</a>
+
+                <a href="https://downloads.hindawi.org/books/13736816.pdf" download target="_blank"><i class="fas fa-download"></i> قصة الأيام القادمة</a>
+
+                <a href="https://downloads.hindawi.org/books/30475042.pdf" download target="_blank"><i class="fas fa-download"></i> شريد في مملكة السحر</a>
+
+                <a href="https://downloads.hindawi.org/books/42051490.pdf" download target="_blank"><i class="fas fa-download"></i> رجل بلا جسد</a>
+
+                <a href="https://downloads.hindawi.org/books/20815025.pdf" download target="_blank"><i class="fas fa-download"></i> تجربة الدكتور أوكس</a>
+
+                <a href="https://downloads.hindawi.org/books/63817174.pdf" download target="_blank"><i class="fas fa-download"></i> تحوُّل</a>
+
+                <a href="https://downloads.hindawi.org/books/19302826.pdf" download target="_blank"><i class="fas fa-download"></i> تجربة جامعة كاينبلاتس الكبرى</a>
+
+                <a href="https://downloads.hindawi.org/books/13153615.pdf" download target="_blank"><i class="fas fa-download"></i> لاسلكيًّا</a>
+
+                <a href="https://downloads.hindawi.org/books/47249605.pdf" download target="_blank"><i class="fas fa-download"></i> الأرض المسطحة</a>
+
+                <a href="https://downloads.hindawi.org/books/20429368.pdf" download target="_blank"><i class="fas fa-download"></i> الأخ الأصغر</a>
+
+                <a href="https://downloads.hindawi.org/books/91941494.pdf" download target="_blank"><i class="fas fa-download"></i> الخروج دون حفظ</a>
+
+                <a href="https://downloads.hindawi.org/books/91486168.pdf" download target="_blank"><i class="fas fa-download"></i> آلة الزمن</a>
+
+                <a href="https://downloads.hindawi.org/books/96416979.pdf" download target="_blank"><i class="fas fa-download"></i> الكشف عن راما</a>
+
+                <a href="https://downloads.hindawi.org/books/82686040.pdf" download target="_blank"><i class="fas fa-download"></i> حرب العوالم</a>
+
+
+            </div>
+        </div>
+
+        <!-- كتب مميزة -->
+        <div class="featured-books">
+            <!-- الكتاب 1 -->
+                      <!-- الكتاب 1 -->
+            
+
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/53742042.svg?v=5" alt="  الطاعون القرمزي">
+              <h3>الطاعون القرمزي</h3>
+              <span class="author">جاك لندن</span>
+              <p class="description">
+                رواية ديستوبية تدور أحداثها في المستقبل بعد أن قضى وباء قاتل على معظم البشرية. من خلال سرد عجوز ناجٍ، يستعرض جاك لندن كيف انهار المجتمع البشري وتحوّلت الحضارة إلى حالة بدائية. الرواية تعكس نظرة فلسفية عن هشاشة التقدم البشري أمام الكوارث، وتطرح تساؤلات عميقة حول طبيعة الإنسان والحضارة.
+                </p>
+
+                <a href="https://downloads.hindawi.org/books/53742042.pdf" target="_blank" download class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/53742042.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/74859409.svg?v=5" alt=" الزيارة المدهشة">
+                <h3> الزيارة المدهشة </h3>
+                <span class="author">   هربرت جورج ويلز</span>
+                <p class="description">
+                 خيالية تدور حول ظهور مخلوق غريب قادم من عالم آخر في بلدة إنجليزية صغيرة. عبر هذه "الزيارة المدهشة"، يعرض هربرت جورج ويلز تأملاته الساخرة في المجتمع والسلطة والدين، ويطرح تساؤلات حول تقبّل الآخر والاختلاف. تحمل الرواية طابعًا فكريًا وفلسفيًا مغلفًا بالخيال والسخرية.
+                    </p>
+
+                <a href="https://downloads.hindawi.org/books/74859409.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/74859409.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/25093936.svg?v=5" alt=" حربنا مع إمارة موناكو">
+                <h3> حربنا مع إمارة موناكو</h3>
+                <span class="author">  حربنا مع إمارة موناكو</span>
+                <p class="description">
+               رواية قصيرة ساخرة تدور حول نزاع خيالي بين دولة كبرى وإمارة موناكو الصغيرة، وتسلّط الضوء على التوترات السياسية والدبلوماسية بأسلوب فكاهي لاذع. يقدم المؤلف نقدًا غير مباشر للسياسات الاستعمارية والصراعات العبثية التي تنشأ لأسباب تافهة، في قالب أدبي ممتع.
+                 </p>
+
+                <a href="https://downloads.hindawi.org/books/25093936.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/25093936.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/13736816.svg?v=5" alt="   قصة الأيام القادمة">
+                <h3>   قصة الأيام القادمة</h3>
+                <span class="author">   هربرت جورج ويلز</span>
+               <p class="description">
+                 رواية خيال علمي تنبؤية تتناول المستقبل البشري في ظل التطور التكنولوجي والصناعي المتسارع. يتخيل ويلز عالماً مستقبلياً يتسم بالتوترات الاجتماعية والاقتصادية، ويطرح تساؤلات عميقة حول طبيعة التقدم وأثره على الإنسان والمجتمع. بأسلوبه الفريد، يقدم رؤية مثيرة لمستقبل قد لا يكون بعيداً.
+                  </p>
+
+                <a href="https://downloads.hindawi.org/books/13736816.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/13736816.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/30475042.svg?v=5" alt="   شريد في مملكة السحر">
+                <h3>  شريد في مملكة السحر</h3>
+                <span class="author">  كوري دوكتورو</span>
+                <p class="description">
+                رواية خيال علمي تدور أحداثها في عالم يجمع بين السحر والتكنولوجيا، حيث يجد البطل نفسه في مملكة تحكمها قوانين غريبة تجمع بين السحر الرقمي والأنظمة التكنولوجية المعقدة. يستعرض كوري دوكتورو من خلال هذه المغامرة رؤيته النقدية للمجتمع، والسلطة، والحرية الرقمية في قالب قصصي مشوق.
+                   </p>
+
+                <a href="https://downloads.hindawi.org/books/30475042.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/30475042.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/42051490.svg?v=5" alt="  رجل بلا جسد">
+                <h3>  رجل بلا جسد</h3>
+                <span class="author"> إدوارد بيدج ميتشل</span>
+                <p class="description">
+                 قصة خيال علمي كلاسيكية تحكي عن تجربة علمية تؤدي إلى اختفاء جسد أحد الأشخاص بالكامل، مع بقائه على قيد الحياة. تستعرض الرواية الأسئلة الفلسفية والعلمية حول الجسد، الهوية، والوجود، بأسلوب سردي مبتكر سبق زمنه، وتُعد من أوائل القصص التي تناولت مفهوم "الرجل غير المرئي".
+                     </p>
+
+                <a href="https://downloads.hindawi.org/books/42051490.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/42051490.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/20815025.svg?v=5" alt=" تجربة الدكتور أوكس">
+                <h3> تجربة الدكتور أوكس</h3>
+                <span class="author"> جول فيرن</span>
+                <p class="description">
+                رواية خيال علمي قصيرة وساخرة تتناول تجربة يجريها الدكتور أوكس في بلدة هادئة عن طريق ضخ غاز غامض في الجو، مما يؤدي إلى تغييرات جذرية في سلوك السكان. بأسلوب فكاهي ذكي، يستعرض جول فيرن كيف يمكن للعلم أن يؤثر على المجتمعات إذا استُخدم دون ضوابط أخلاقية.
+               </p>
+
+                <a href="https://downloads.hindawi.org/books/20815025.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/20815025.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/63817174.svg?v=5" alt="   تحوُّل">
+                <h3> تحوُّل</h3>
+                <span class="author">   ماري شيلي</span>
+               <p class="description">
+                قصة قصيرة غامضة تدور حول بحّار متهور يعقد صفقة مشؤومة مع كائن غريب، مقابل الثروة. يستيقظ ليجد نفسه قد خسر أكثر مما توقّع، بما في ذلك هويته. بأسلوبها الكلاسيكي، تسلط ماري شيلي الضوء على الطمع البشري والعواقب المخيفة للقرارات المتهورة.
+                  </p>
+
+                <a href="https://downloads.hindawi.org/books/63817174.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                                <a href="https://downloads.hindawi.org/books/63817174.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/19302826.svg?v=5" alt="     تجربة جامعة كاينبلاتس الكبرى">
+                <h3>    تجربة جامعة كاينبلاتس الكبرى</h3>
+                <span class="author"> آرثر كونان دويل</span>
+               <p class="description">
+                 يدية تُجرى في جامعة كاينبلاتس، وتؤدي إلى نتائج غريبة تثير الجدل بين العلماء والطلاب. بأسلوبه الساخر، يقدّم دويل نقدًا لطموحات العلم غير المقيدة والغرور الأكاديمي.
+                   </p>
+                <a href="https://downloads.hindawi.org/books/19302826.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/19302826.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/13153615.svg?v=5" alt=" لاسلكيًّا">
+                <h3> لاسلكيًّا</h3>
+                <span class="author">  روديارد كبلينج</span>
+              <p class="description">
+                قصة قصيرة تأملية تدور حول تجربة غريبة لرجل يلتقط، عبر جهاز لاسلكي بدائي، ترددات يبدو أنها تعود إلى شاعر من الماضي. يستكشف كبلينج في هذه القصة الغامضة العلاقة بين التكنولوجيا والوعي، والتواصل العابر للزمن بأسلوب شاعري وفلسفي.
+                </p>
+
+                <a href="https://downloads.hindawi.org/books/13153615.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/13153615.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/47249605.svg?v=5" alt="الأرض المسطحة">
+                <h3> الأرض المسطحة</h3>
+                <span class="author">  إدوين إبوت</span>
+                <p class="description">
+                رواية خيال علمي وفلسفية تدور أحداثها في عالم ثنائي الأبعاد، حيث يقدّم الكاتب نقدًا ساخرًا للمجتمع الفيكتوري عبر قصة رمزية عن الإدراك والسلطة والمعرفة. يطرح الكتاب تساؤلات عميقة حول حدود الفهم البشري وإمكانيات العوالم الأخرى، ويُعد من الكلاسيكيات التي ألهمت مفاهيم علمية لاحقة عن الأبعاد.
+                </p>
+
+                <a href="https://downloads.hindawi.org/books/47249605.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/47249605.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/20429368.svg?v=5" alt="    الأخ الأصغر">
+                <h3>  الأخ الأصغر</h3>
+                <span class="author"> كوري دوكتورو</span>
+                <p class="description">
+               رواية خيال علمي معاصرة تتناول قضايا الحرية الشخصية والرقابة الحكومية في عالم تسيطر عليه التكنولوجيا. تدور القصة حول مراهق يُدعى ماركوس، يُصبح هدفًا للسلطات بعد هجوم إرهابي، ويستخدم مهاراته التقنية لمحاربة القمع الرقمي. يقدم الكتاب رؤية نقدية للواقع الأمني والرقمي في المجتمعات الحديثة، بأسلوب مشوّق وتحريضي.
+                    </p>
+
+                <a href="https://downloads.hindawi.org/books/20429368.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/20429368.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 13 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/91941494.svg?v=5" alt="   الخروج دون حفظ">
+                <h3>  الخروج دون حفظ</h3>
+                <span class="author"> روث نستفولد</span>
+               <p class="description">
+                قصة خيال علمي قصيرة تدور في عالم افتراضي متقدم، حيث تتقاطع حدود الذكاء الاصطناعي مع الهوية البشرية. تتناول القصة أسئلة فلسفية حول الوعي، الحرية، والاختيار في زمن تحكمه البرامج والواقع الرقمي. بأسلوب مشوّق وتأملي، تطرح الكاتبة رؤية مستقبلية لعلاقة الإنسان بالتكنولوجيا.
+               </p>
+
+                <a href="https://downloads.hindawi.org/books/91941494.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/91941494.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/91486168.svg?v=5" alt=" آلة الزمن">
+                <h3> آلة الزمن</h3>
+                <span class="author"> هربرت جورج ويلز</span>
+                <p class="description">
+                  رواية خيال علمي كلاسيكية تدور حول عالم يبتكر آلة تمكنه من السفر عبر الزمن. من خلال رحلته إلى المستقبل البعيد، يكتشف تحولات مدهشة في الحضارة البشرية. يناقش الكتاب قضايا اجتماعية وفلسفية عميقة، مثل الصراع الطبقي والمصير الإنساني، بأسلوب مشوق ومليء بالخيال.
+                  </p>
+                <a href="https://downloads.hindawi.org/books/91486168.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/91486168.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/96416979.svg?v=2" alt=" الكشف عن راما">
+                <h3> الكشف عن راما</h3>
+                <span class="author">  جنتري لي وآرثر كلارك</span>
+                <p class="description">
+                   رواية خيال علمي مثيرة تبدأ باكتشاف جسم أسطواني ضخم يقترب من النظام الشمسي، يُطلق عليه اسم "راما". يرسل العلماء بعثة فضائية لاستكشاف هذا الكائن الغامض، ليجدوا أنه ليس مجرد صخرة فضائية، بل سفينة فضائية متقدمة بتكنولوجيا لا تشبه شيئًا عرفه البشر من قبل. تطرح الرواية أسئلة فلسفية حول الحياة خارج الأرض ومستقبل البشرية.
+                           </p>
+                <a href="https://downloads.hindawi.org/books/96416979.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                 <a href="https://downloads.hindawi.org/books/96416979.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+
+            <!-- الكتاب 16 -->
+            <div class="book-card">
+                <img src="https://downloads.hindawi.org/covers/svg/270x360/82686040.svg?v=5" alt="   حرب العوالم">
+                <h3>  حرب العوالم</h3>
+                <span class="author">  هربرت جورج ويلز</span>
+                <p class="description">
+                 رواية خيال علمي كلاسيكية تحكي قصة غزو فضائي من كوكب المريخ يهدد البشرية بالانقراض. يصف هربرت جورج ويلز المواجهة المروعة بين البشر والمخلوقات الفضائية التي تفوقهم في التكنولوجيا والوحشية. تحمل الرواية تأملات عميقة في الغرور البشري والهشاشة الحضارية أمام قوى أعظم.
+                  </p>
+                <a href="https://downloads.hindawi.org/books/82686040.pdf" download target="_blank" class="read-btn">قراءة الكتاب</a>
+                <a href="https://downloads.hindawi.org/books/82686040.pdf" download class="download-btn"style="color: #3a6b47;"><i class="fas fa-download" style="color: #3a6b47;"></i> تحميل</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // كود لجعل القائمة المنسدلة تعمل عند النقر على الهواتف
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.querySelector('.menu-button');
+        const dropdownContent = document.querySelector('.dropdown-content');
+        
+        menuButton.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.stopPropagation();
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+        
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && dropdownContent.style.display === 'block' && 
+                !menuButton.contains(e.target) && !dropdownContent.contains(e.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
